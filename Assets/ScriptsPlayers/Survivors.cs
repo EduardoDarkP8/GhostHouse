@@ -8,6 +8,10 @@ public class Survivors : MonoBehaviour
     public Rigidbody rigidbody;
     public float velocity;
     float x, y;
+    Quaternion targetRotation;
+    float time;
+    float rotateTime;
+    float rotate;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,19 +23,22 @@ public class Survivors : MonoBehaviour
     {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
+        rotate = Mathf.Atan2(x, y) * Mathf.Rad2Deg;
     }
 	private void FixedUpdate()
 	{
         Move();
-        Rotate();
+        print(transform.rotation.y);
 	}
 	void Move() 
     {
-            rigidbody.velocity = transform.forward * velocity * y;
-    }
-    void Rotate() 
-    {
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0,transform.rotation.y+90*x,0),2f);;
+        if (x!=0 || y!=0) 
+        {
+            rigidbody.velocity = transform.forward * velocity;
+            Quaternion target = Quaternion.Euler(0, rotate, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, target, 5f);
+            print(Mathf.Atan2(y, x));
+        }
     }
 
 }
