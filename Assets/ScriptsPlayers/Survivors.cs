@@ -5,13 +5,13 @@ using UnityEngine;
 public class Survivors : MonoBehaviour
 {
 
-    public Rigidbody rigidbody;
+    public Rigidbody rigbody;
     public float velocity;
     float x, y;
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class Survivors : MonoBehaviour
 	}
 	void Move() 
     {
-            rigidbody.velocity = transform.forward * velocity * y;
+            rigbody.velocity = transform.forward * velocity * y;
     }
     void Rotate() 
     {
