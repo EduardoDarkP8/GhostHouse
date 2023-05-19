@@ -8,9 +8,6 @@ public class Survivors : MonoBehaviour
     Rigidbody rigidbody;
     public float velocity;
     float x, y;
-    Quaternion targetRotation;
-    float time;
-    float rotateTime;
     float rotate;
     bool inArmario;
     float delay = 1.5f;
@@ -63,7 +60,7 @@ public class Survivors : MonoBehaviour
         }
 		else 
         {
-            velocity.Equals(0);
+            rigidbody.velocity.Equals(0);
         }
     }
     void Salt() 

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Ghosts : MonoBehaviour
 {
-    public float velocidade = 6, velocRotate = 50;
+    public float velocidade = 5;
     int tokenDash = 1;
     float moverZ, recargaToken, tempoRecarga = 2.5f;
-    Quaternion rotacaoDireita, rotacaoEsquerda;
     Rigidbody rigbody;
     Collider collision;
-    bool rotacionando = false;
+    float x, y;
+    float rotate;
     void Start()
     {
         rigbody = GetComponent<Rigidbody>();
@@ -19,25 +19,13 @@ public class Ghosts : MonoBehaviour
 
     void Update()
     {
-        moverZ = Input.GetAxis("Vertical") * velocidade * Time.deltaTime;
-        transform.Translate(0, 0, moverZ);
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            rotacaoDireita = Quaternion.Euler(0, transform.position.y + 90, 0);
-            StartCoroutine(rotacionarDireita(rotacaoDireita, 0.25f));
-        }
-            
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            rotacaoEsquerda = Quaternion.Euler(0, transform.position.y -90, 0);
-            StartCoroutine(rotacionarEsquerda(rotacaoEsquerda, 0.25f));
-        }
-            
+
 
         if (Input.GetButtonDown("Jump"))
         {
             if(tokenDash == 1)
             {
+                rigbody.velocity.Equals(0);
                 Vector3 frente = transform.forward;
                 rigbody.AddForce(frente * 50000);
                 collision.isTrigger = true;
@@ -61,9 +49,28 @@ public class Ghosts : MonoBehaviour
                 print("Dash Pronto");
             }
         }
-
+        x = Input.GetAxisRaw("Horizontal");
+        y = Input.GetAxisRaw("Vertical");
+        rotate = Mathf.Atan2(x, y) * Mathf.Rad2Deg;
     }
+	private void FixedUpdate()
+	{
+        Move();
+	}
+	void Move()
+    {
+        if (x != 0 || y != 0)
+        {
+            rigbody.velocity = transform.forward * velocidade;
+            Quaternion target = Quaternion.Euler(0, rotate, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, target, 5f);
 
+        }
+        else
+        {
+            rigbody.velocity.Equals(0);
+        }
+    }
     IEnumerator DesacelerarDash(Vector3 direcao)
     {
         
@@ -73,45 +80,7 @@ public class Ghosts : MonoBehaviour
     }
 
     
-    IEnumerator rotacionarDireita(Quaternion rotNova, float duracao)
-    {
-        if (rotacionando)
-        {
-            yield break;
-        }
-        rotacionando = true;
-
-        Quaternion rotAtual = transform.rotation;
-
-        float contador = 0;
-
-        while (contador < duracao)
-        {
-            contador += Time.deltaTime;
-            transform.rotation = Quaternion.Lerp(rotAtual, rotNova, contador / duracao);
-            yield return null;
-        }
-        rotacionando = false;
-    }
-    IEnumerator rotacionarEsquerda(Quaternion rotNova, float duracao)
-    {
-        if (rotacionando)
-        {
-            yield break;
-        }
-        rotacionando = true;
-
-        Quaternion rotAtual = transform.rotation;
-
-        float contador = 0;
-        while (contador < duracao)
-        {
-            contador += Time.deltaTime;
-            transform.rotation = Quaternion.Lerp(rotAtual, rotNova, contador / duracao);
-            yield return null;
-        }
-        rotacionando = false;
-    }
+    
     IEnumerator DiminuirVelocidade() 
     {
         velocidade /= 4;
