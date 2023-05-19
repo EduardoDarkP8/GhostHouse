@@ -5,7 +5,7 @@ using UnityEngine;
 public class Survivors : MonoBehaviour
 {
 
-    Rigidbody rigidbody;
+    Rigidbody rigbody;
     public float velocity;
     float x, y;
     float rotate;
@@ -19,7 +19,7 @@ public class Survivors : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -53,7 +53,7 @@ public class Survivors : MonoBehaviour
     {
         if (x!=0 || y!=0) 
         {
-            rigidbody.velocity = transform.forward * velocity;
+            rigbody.velocity = transform.forward * velocity;
             Quaternion target = Quaternion.Euler(0, rotate, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, target, 5f);
 
