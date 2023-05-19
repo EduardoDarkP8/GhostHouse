@@ -112,4 +112,18 @@ public class Ghosts : MonoBehaviour
         }
         rotacionando = false;
     }
+    IEnumerator DiminuirVelocidade() 
+    {
+        velocidade /= 4;
+        yield return new WaitForSeconds(2);
+        velocidade *= 4;
+    }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag ==  "Sal") 
+        {
+            Destroy(other.gameObject);
+            StartCoroutine(DiminuirVelocidade());
+        }
+	}
 }
