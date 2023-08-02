@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 708a2a99b9d517e4e96bc821473a92fc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - player: {instanceID: 0}
+  - saltPoint: {instanceID: 0}
+  - Salt: {fileID: 4613529219697815346, guid: 9ff994f91db39d44a96e442637e6ae5f, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
