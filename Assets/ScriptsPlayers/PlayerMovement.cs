@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public PlayerSettings player;
-    float x, z;
+    public float x, z;
     Quaternion target;
 
     void Start()
@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.plState != playerStates.Dash) 
+        if (player.plState == playerStates.Stand || player.plState == playerStates.Walk) 
         {
             x = Input.GetAxisRaw("Horizontal");
             z = Input.GetAxisRaw("Vertical");

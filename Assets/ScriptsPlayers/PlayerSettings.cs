@@ -18,6 +18,7 @@ public class PlayerSettings : MonoBehaviour
     public playerStates plState;
     public float dashForce;
     public Transform saltPoint;
+    public GameObject salt;
     // Start is called before the first frame update
     void Start()
     {
