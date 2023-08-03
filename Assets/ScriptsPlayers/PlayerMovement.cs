@@ -24,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
                 player.plState = playerStates.Stand;
             }
         }
+		else 
+        {
+            x = 0;
+            z = 0;
+        }
         if (x != 0 || z != 0)
         {
             target = Quaternion.Euler(0, Mathf.Atan2(x, z) * Mathf.Rad2Deg, 0);

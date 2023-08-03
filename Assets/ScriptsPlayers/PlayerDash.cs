@@ -35,7 +35,6 @@ public class PlayerDash : MonoBehaviour
     {
         player.playerBody.GetComponent<Collider>().enabled = false;
         player.plState = playerStates.Dash;
-        player.x = 0;
         yield return new WaitForSeconds(0.5f);
 		if (player.plState == playerStates.Dash && Input.GetButton("Jump")) 
         {
