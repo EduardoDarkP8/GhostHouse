@@ -8,7 +8,8 @@ public enum playerStates
     Stand,
     Walk,
     Salt,
-    Dash
+    Dash,
+    Hidden
 }
 public class PlayerSettings : MonoBehaviour
 {
@@ -38,7 +39,9 @@ public class PlayerSettings : MonoBehaviour
             gameObject.AddComponent<PlayerSalt>();
             gameObject.GetComponent<PlayerSalt>().player = this;
             gameObject.GetComponent<PlayerSalt>().saltPoint = saltPoint;
-}
+            gameObject.AddComponent<PlayerHide>();
+            gameObject.GetComponent<PlayerHide>().player = this;
+        }
     }
 
     // Update is called once per frame
