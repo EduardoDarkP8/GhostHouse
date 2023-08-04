@@ -16,13 +16,8 @@ public class Closet : MonoBehaviour
     {
         
     }
-	private void OnTriggerStay(Collider other)
-	{
-		if (other.gameObject.transform.parent.gameObject.tag == "Survival" && Input.GetButtonDown("Fire1")) 
-        {
-            other.gameObject.transform.parent.gameObject.GetComponent<PlayerHide>().hide(transform);
-        }
-	}
+	
+    
 
 
 }

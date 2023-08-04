@@ -9,6 +9,7 @@ public enum playerStates
     Walk,
     Salt,
     Dash,
+    SeekCloset,
     Hidden
 }
 public class PlayerSettings : MonoBehaviour
@@ -25,7 +26,7 @@ public class PlayerSettings : MonoBehaviour
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
-        tag = GameSettings.tags[Random.Range(0,2)];
+        tag = GameSettings.tags[1];
         playerBody.tag = tag;
 		if (tag == GameSettings.tags[0]) 
         {
