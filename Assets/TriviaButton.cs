@@ -19,6 +19,6 @@ public class TriviaButton : MonoBehaviour
     void Click()
     {
         button.interactable = false;
-
+        main.ButtonsController(text.text,button);
     }
 }

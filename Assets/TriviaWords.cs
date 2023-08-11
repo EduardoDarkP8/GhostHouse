@@ -31,6 +31,6 @@ public class TriviaWords : MonoBehaviour
     }
     void Click() 
     {
-
+        main.WordController();
     }
 }
