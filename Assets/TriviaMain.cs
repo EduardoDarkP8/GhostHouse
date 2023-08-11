@@ -21,7 +21,10 @@ public class TriviaMain : MonoBehaviour
     {
 		foreach (TriviaWords wd in words) 
         {
-            
+			if (!wd.last) 
+            {
+                wd.last
+            }
         }
     }
 }
