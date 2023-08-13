@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TriviaWords : MonoBehaviour
+public class TriviaLetters : MonoBehaviour
 {
     public TriviaMain main;
     public Button originalButton;
     public bool last;
     public Button button;
     public Text text;
-    void Start()
+    void Awake()
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(Click);

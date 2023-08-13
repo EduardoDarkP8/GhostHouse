@@ -9,7 +9,7 @@ public class TriviaButton : MonoBehaviour
     public Button button;
     public List<string> strings = new List<string>();
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GetComponent<Button>().onClick.AddListener(Click);
         button = GetComponent<Button>();
