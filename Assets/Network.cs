@@ -11,6 +11,7 @@ public class Network : MonoBehaviourPunCallbacks
         print("Iniciado Network...");
         PhotonNetwork.LocalPlayer.NickName = "Player" + Random.Range(0,1000);
         PhotonNetwork.ConnectUsingSettings();
+        print(PhotonNetwork.LocalPlayer.NickName);
     }
     public override void OnConnectedToMaster()
     {
