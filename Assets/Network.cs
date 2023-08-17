@@ -28,8 +28,8 @@ public class Network : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom("GameLoot");
         print("Entrando na sala");
     }
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
+	public override void OnJoinRoomFailed(short returnCode, string message)
+	{
         print("Erro: " + message + " Codigo: " + returnCode);
         if (returnCode == ErrorCode.GameDoesNotExist) 
         {
@@ -40,7 +40,32 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        print(newPlayer.NickName);
-    }
+        print(newPlayer.NickName + " entrou");
 
+        print(PhotonNetwork.PlayerList.Length);
+    }
+	public override void OnJoinedRoom()
+	{
+        print("Entrou na Sala: " + PhotonNetwork.NickName);
+        PhotonNetwork.Instantiate("PlayerObject", transform.position, Quaternion.identity);
+        print(PhotonNetwork.PlayerList.Length);
+    }
+	public override void OnPlayerLeftRoom(Player otherPlayer)
+	{
+        print(otherPlayer.NickName + " Saiu");
+
+        print(PhotonNetwork.PlayerList.Length);
+    }
+	public override void OnLeftRoom()
+	{
+        print("Você saiu da Sala");
+
+        print(PhotonNetwork.PlayerList.Length);
+    }
+	public override void OnErrorInfo(ErrorInfo errorInfo)
+	{
+        print("Error: " + errorInfo.Info);
+
+        print(PhotonNetwork.PlayerList.Length);
+    }
 }
