@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
-
+using Photon.Pun;
 public class PlayerHide : MonoBehaviour
 {
     public PlayerSettings player;
