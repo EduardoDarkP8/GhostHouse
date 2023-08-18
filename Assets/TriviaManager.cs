@@ -2,41 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System.Runtime.ConstrainedExecution;
-using System;
 
+
+[System.Serializable]
 public class TriviaManager : MonoBehaviour
 {
-     public TextAsset wordsJSON;
+    public TextAsset wordsJSON;
+    string conteudo;
+    public Dictionary<string, List<string>> dictionary = new Dictionary<string, List<string>>();
 
-    [System.Serializable]
-    public class WordList 
-    {
-        public string[] words;
-    }
-
-    public WordList wordList = new WordList();
     // Start is called before the first frame update
     void Start()
     {
+        conteudo = wordsJSON.text;
+        Debug.Log("JSON Content: " + conteudo); // Verifique se o conteúdo está correto
+        dictionary = JsonUtility.FromJson<Dictionary<string, List<string>>>(conteudo);
 
-        // Certifique-se de que wordsJSON tenha sido atribuído antes de usar
-        wordList = JsonUtility.FromJson<WordList>(wordsJSON.text);
-        if (wordList == null || wordList.words == null)
+        foreach (var kvp in dictionary)
         {
-            Debug.LogError("Erro ao analisar o JSON ou lista de palavras!");
-            return;
-        }
-
-        Debug.Log("Número de palavras no JSON: " + wordList.words.Length);
-        foreach (string word in wordList.words)
-        {
-            Debug.Log("Word: " + word);
-
-
+            Debug.Log("Número de letras: " + kvp.Key);
+            foreach (var word in kvp.Value)
+            {
+                Debug.Log("Palavra: " + word);
+            }
         }
     }
-    // Update is called once per frame
     void Update()
     {
         
