@@ -48,7 +48,6 @@ public class Network : MonoBehaviourPunCallbacks
 	{
         print("Entrou na Sala: " + PhotonNetwork.NickName);
         PhotonNetwork.Instantiate("PlayerObject", transform.position, Quaternion.identity);
-        print(PhotonNetwork.PlayerList.Length);
     }
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{

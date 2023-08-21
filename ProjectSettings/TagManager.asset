@@ -7,11 +7,12 @@ TagManager:
   - Ghost
   - Survival
   - Closet
+  - Body
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Body
   - Water
   - UI
   - 

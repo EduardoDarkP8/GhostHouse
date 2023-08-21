@@ -5,5 +5,6 @@ using UnityEngine;
 public class Closet : MonoBehaviour
 {
     public List<GameObject> players = new List<GameObject>();
-    public bool used;	
+    public bool used;
+    public Transform jumpPoint;
 }

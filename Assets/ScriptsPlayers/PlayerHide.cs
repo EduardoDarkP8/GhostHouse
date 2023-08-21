@@ -15,7 +15,7 @@ public class PlayerHide : MonoBehaviour
 
     void Update()
     {
-
+        if (player.pv.IsMine) { 
         if (Input.GetButtonUp("Interact") && player.plState == playerStates.Hidden)
         {
             StartCoroutine(exitCloset());
@@ -25,7 +25,7 @@ public class PlayerHide : MonoBehaviour
             StartCoroutine(findCloset());
 
         }
-
+        }
     }
     public void hide(Transform local, Closet cl)
     {
@@ -45,7 +45,7 @@ public class PlayerHide : MonoBehaviour
         if (player.plState == playerStates.Hidden)
         {
 
-            player.transform.position += new Vector3(local.forward.x, 0, local.forward.z);
+            player.transform.position = new Vector3(local.position.x, 0, local.position.z);
             player.playerBody.GetComponent<Collider>().isTrigger = false;
             player.playerBody.GetComponent<MeshRenderer>().enabled = true;
             player.plState = playerStates.Stand;
@@ -76,20 +76,20 @@ public class PlayerHide : MonoBehaviour
     }
     void checkPlayer(Collider collider)
     {
-        if (collider.tag == "Closet")
-        {
-
-            GameObject gm = collider.gameObject;
-            if (!collider.GetComponent<Closet>().players.Contains(gameObject))
+            if (collider.tag == "Closet")
             {
-                hide(collider.transform, collider.GetComponent<Closet>());
+                Closet cl = collider.GetComponent<Closet>();
+                GameObject gm = collider.gameObject;
+                if (!collider.GetComponent<Closet>().players.Contains(gameObject))
+                {
+                    hide(collider.transform, cl);
 
+                }
+                else if (!find)
+                {
+                    getOut(cl.jumpPoint);
+                }
             }
-            else if (!find)
-            {
-                getOut(collider.transform);
-            }
-        }
-
+        
     }
 }

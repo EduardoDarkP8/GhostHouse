@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 
 public enum playerStates
 {
@@ -21,8 +21,12 @@ public class PlayerSettings : MonoBehaviour
     public float dashForce;
     public Transform saltPoint;
     public GameObject salt;
-    // Start is called before the first frame update
-    void Start()
+    public PhotonView pv;
+    public Camera cm;
+    public GameObject viewFlashLight;
+    public GameObject viewGhost;
+	// Start is called before the first frame update
+	private void Awake()
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
@@ -33,6 +37,9 @@ public class PlayerSettings : MonoBehaviour
             speed = 5;
             gameObject.AddComponent<PlayerDash>();
             gameObject.GetComponent<PlayerDash>().player = this;
+            GameObject gm = Instantiate(viewGhost, playerBody.transform.position, Quaternion.identity) as GameObject;
+            gm.transform.SetParent(playerBody.transform);
+            gm.name = "ViewMesh";
         }
         else if (tag == GameSettings.tags[1])
 		{
@@ -42,12 +49,23 @@ public class PlayerSettings : MonoBehaviour
             gameObject.GetComponent<PlayerSalt>().saltPoint = saltPoint;
             gameObject.AddComponent<PlayerHide>();
             gameObject.GetComponent<PlayerHide>().player = this;
+            GameObject gm = Instantiate(viewFlashLight, playerBody.transform.position, Quaternion.identity) as GameObject;
+            gm.transform.SetParent(playerBody.transform);
+            gm.name = "ViewMesh";
+        }
+		if (pv.IsMine) 
+        {
+            playerBody.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!pv.IsMine) 
+        {
+            cm.enabled = false;
+            cm.gameObject.GetComponent<AudioListener>().enabled = false;
+        }
     }
 }
