@@ -3,7 +3,9 @@ guid: 98d09ddf35306aa4ea0099632cd8253b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - player: {instanceID: 0}
+  - Joystick: {fileID: 11467636, guid: 7973d81b61b491640b7a0d00c9de83d3, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

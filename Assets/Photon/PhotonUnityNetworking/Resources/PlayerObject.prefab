@@ -103,6 +103,8 @@ MonoBehaviour:
   player: {fileID: 7739163173834089586}
   x: 0
   z: 0
+  joystick: {fileID: 0}
+  joystickInstance: {fileID: 0}
 --- !u!114 &4977052263087742058
 MonoBehaviour:
   m_ObjectHideFlags: 0

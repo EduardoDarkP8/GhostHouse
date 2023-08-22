@@ -25,8 +25,8 @@ public class PlayerSettings : MonoBehaviour
     public Camera cm;
     public GameObject viewFlashLight;
     public GameObject viewGhost;
-	// Start is called before the first frame update
-	private void Awake()
+    // Start is called before the first frame update
+    private void Awake()
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
