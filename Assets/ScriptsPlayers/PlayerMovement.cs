@@ -12,8 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        joystickInstance = GameObject.Find("Joystick");
-        joystick = joystickInstance.GetComponent<bl_Joystick>();
+		if (player.pv.IsMine) 
+        {
+            joystickInstance = GameObject.Find("Joystick");
+            joystick = joystickInstance.GetComponent<bl_Joystick>();
+        }
+        
     }
 
     // Update is called once per frame

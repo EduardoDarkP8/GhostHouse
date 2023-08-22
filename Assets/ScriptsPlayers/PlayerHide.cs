@@ -63,11 +63,7 @@ public class PlayerHide : MonoBehaviour
         }
     }
     [PunRPC]
-    void punClosetExit(PhotonMessageInfo info) 
-    {
-        exitClosetCourotine();
-    }
-    void exitClosetCourotine() 
+    void exitClosetCourotine(PhotonMessageInfo info) 
     {
 
         StartCoroutine(exitCloset());

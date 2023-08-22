@@ -19,7 +19,7 @@ public class ViewCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pl.pv.RPC("Stunning",RpcTarget.All);
+        //pl.pv.RPC("Stunning",RpcTarget.All);
     }
     [PunRPC]
     void Stunning(PhotonMessageInfo info) 
