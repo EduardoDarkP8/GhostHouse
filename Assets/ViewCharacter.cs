@@ -22,16 +22,11 @@ public class ViewCharacter : MonoBehaviour
     public void addMesh(MeshRenderer newMesh)
     {       
         newMesh.enabled = true;
-        StartCoroutine(remover(newMesh));
     }
     public void removeMesh(MeshRenderer newMesh)
     {
         newMesh.enabled = false;
     }
-    IEnumerator remover(MeshRenderer newMesh)
-    {
-        yield return new WaitForSeconds(2f);
-        removeMesh(newMesh);
-    }
+
     
 }

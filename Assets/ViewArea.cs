@@ -14,6 +14,7 @@ public class ViewArea : MonoBehaviour
     Mesh visionConeMesh;
     MeshFilter meshFilter_;
     ViewCharacter vc;
+    public List<TipeOfView> tipeOfViews = new List<TipeOfView>();
     void Start()
     {
         vc = GetComponent<ViewCharacter>();
@@ -26,7 +27,10 @@ public class ViewArea : MonoBehaviour
 
     void Update()
     {
-        DrawVisionCone();
+		if (vc.pl.pv.IsMine) 
+        {
+            DrawVisionCone();
+        }        
     }
 
     void DrawVisionCone()//this method creates the vision cone mesh
@@ -45,21 +49,28 @@ public class ViewArea : MonoBehaviour
             Cosine = Mathf.Cos(Currentangle);
             Vector3 RaycastDirection = (transform.forward * Cosine) + (transform.right * Sine);
             Vector3 VertForward = (Vector3.forward * Cosine) + (Vector3.right * Sine);
-            float visibility = 1.0f; 
+            float visibility = 1.0f;
             if (Currentangle < -Mathf.PI / 4.0f || Currentangle > Mathf.PI / 4.0f)
             {
                 float normalizedAngle = Mathf.Abs(Currentangle) - Mathf.PI / 4.0f;
-                visibility = Mathf.Clamp01(1.0f - normalizedAngle * 2.0f); 
+                visibility = Mathf.Clamp01(1.0f - normalizedAngle * 2.0f);
             }
-            if (Physics.Raycast(transform.position, RaycastDirection, out RaycastHit hit, visionRange, visionObstructingLayer))
+            RaycastHit hit;
+            RaycastHit hit2;
+            if (Physics.Raycast(transform.position, RaycastDirection, out hit, visionRange, visionObstructingLayer))
             {
                 Vertices[i + 1] = VertForward * hit.distance * visibility;
             }
-            else if (Physics.Raycast(transform.position, RaycastDirection, out RaycastHit hit2, visionRange, body)) 
+            else if (Physics.Raycast(transform.position, RaycastDirection, out hit2, visionRange, body)) 
             {
-				if (hit2.collider.gameObject.GetComponent<MeshRenderer>()) 
+				if (hit2.collider.gameObject.GetComponent<TipeOfView>()) 
                 {
-                    vc.addMesh(hit2.collider.gameObject.GetComponent<MeshRenderer>());
+                    hit2.collider.gameObject.GetComponent<TipeOfView>().spotLook = true;
+                    hit2.collider.gameObject.GetComponent<TipeOfView>().timer = 0;
+                    if (!tipeOfViews.Contains(hit2.collider.gameObject.GetComponent<TipeOfView>())) 
+                    {
+                        tipeOfViews.Add(hit2.collider.gameObject.GetComponent<TipeOfView>());
+                    }
                     Vertices[i + 1] = VertForward * hit2.distance * visibility;
                 }
 				else 
@@ -74,6 +85,25 @@ public class ViewArea : MonoBehaviour
 
 
             Currentangle += angleIcrement;
+        }
+        List<TipeOfView> tipeOfViewsToRemove = new List<TipeOfView>();
+
+        foreach (TipeOfView tp in tipeOfViews)
+        {
+            if (tp.spotLook == true)
+            {
+                vc.addMesh(tp.meshRenderer);
+            }
+            else if(tp.spotLook == false)
+            {
+                vc.removeMesh(tp.meshRenderer);
+                tipeOfViewsToRemove.Add(tp);
+            }
+        }
+
+        foreach (TipeOfView tpToRemove in tipeOfViewsToRemove)
+        {
+            tipeOfViews.Remove(tpToRemove);
         }
         for (int i = 0, j = 0; i < triangles.Length; i += 3, j++)
         {
