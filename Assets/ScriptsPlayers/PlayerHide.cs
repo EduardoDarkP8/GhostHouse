@@ -23,7 +23,6 @@ public class PlayerHide : MonoBehaviour
         else if (Input.GetButtonUp("Interact") && player.plState != playerStates.Hidden)
         {
             StartCoroutine(findCloset());
-
         }
         }
     }
@@ -31,13 +30,14 @@ public class PlayerHide : MonoBehaviour
     {
         if (player.plState != playerStates.Hidden && find)
         {
-            player.plState = playerStates.Hidden;
-            player.playerBody.GetComponent<Collider>().isTrigger = false;
-            player.transform.position = new Vector3(local.position.x, transform.position.y, local.position.z);
-            player.playerBody.GetComponent<MeshRenderer>().enabled = false;
-            cl.players.Add(gameObject);
-
-
+			if (!cl.isUsing) 
+            {
+                player.plState = playerStates.Hidden;
+                player.playerBody.GetComponent<Collider>().isTrigger = false;
+                player.transform.position = new Vector3(local.position.x, transform.position.y, local.position.z);
+                player.playerBody.GetComponent<MeshRenderer>().enabled = false;
+                cl.players.Add(gameObject);
+            }
         }
     }
     public void getOut(Transform local)
@@ -50,6 +50,7 @@ public class PlayerHide : MonoBehaviour
             player.playerBody.GetComponent<MeshRenderer>().enabled = true;
             player.plState = playerStates.Stand;
             find = false;
+            player.isStuning = true;
         }
     }
     IEnumerator findCloset()
@@ -60,6 +61,17 @@ public class PlayerHide : MonoBehaviour
         {
             find = false;
         }
+    }
+    [PunRPC]
+    void punClosetExit(PhotonMessageInfo info) 
+    {
+        exitClosetCourotine();
+    }
+    void exitClosetCourotine() 
+    {
+
+        StartCoroutine(exitCloset());
+        
     }
     IEnumerator exitCloset()
     {

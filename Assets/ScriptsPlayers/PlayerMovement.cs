@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (x != 0 || z != 0)
             {
+                
                 target = Quaternion.Euler(0, Mathf.Atan2(x, z) * Mathf.Rad2Deg, 0);
                 player.plState = playerStates.Walk;
             }

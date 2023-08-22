@@ -3,7 +3,8 @@ guid: dcb4c885e2195de4fa743ce9c3b0f990
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - visionConeMaterial: {fileID: 2100000, guid: fc38064e4acd9344187eb91f34d0cd99, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

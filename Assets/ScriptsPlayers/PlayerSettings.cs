@@ -10,7 +10,8 @@ public enum playerStates
     Salt,
     Dash,
     SeekCloset,
-    Hidden
+    Hidden,
+    Stunned,
 }
 public class PlayerSettings : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class PlayerSettings : MonoBehaviour
     public Camera cm;
     public GameObject viewFlashLight;
     public GameObject viewGhost;
+    public List<Light> lights = new List<Light>();
+    public bool isStuning = false;
+    public Color[] colors = new Color[2];
 	// Start is called before the first frame update
 	private void Awake()
     {
@@ -40,6 +44,8 @@ public class PlayerSettings : MonoBehaviour
             GameObject gm = Instantiate(viewGhost, playerBody.transform.position, Quaternion.identity) as GameObject;
             gm.transform.SetParent(playerBody.transform);
             gm.name = "ViewMesh";
+            
+            
         }
         else if (tag == GameSettings.tags[1])
 		{
@@ -52,6 +58,9 @@ public class PlayerSettings : MonoBehaviour
             GameObject gm = Instantiate(viewFlashLight, playerBody.transform.position, Quaternion.identity) as GameObject;
             gm.transform.SetParent(playerBody.transform);
             gm.name = "ViewMesh";
+            lights.Add(gm.GetComponent<Light>());
+            lights.Add(gm.transform.Find("Light").GetComponent<Light>());
+
         }
 		if (pv.IsMine) 
         {

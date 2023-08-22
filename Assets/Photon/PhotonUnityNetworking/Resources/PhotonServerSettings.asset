@@ -45,6 +45,9 @@ MonoBehaviour:
   - findCloset
   - NetworkSalt
   - Rotate
+  - addMesh
+  - Stunning
+  - punClosetExit
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

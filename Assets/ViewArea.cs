@@ -14,7 +14,7 @@ public class ViewArea : MonoBehaviour
     Mesh visionConeMesh;
     MeshFilter meshFilter_;
     ViewCharacter vc;
-    public List<TipeOfView> tipeOfViews = new List<TipeOfView>();
+    
     void Start()
     {
         vc = GetComponent<ViewCharacter>();
@@ -67,9 +67,9 @@ public class ViewArea : MonoBehaviour
                 {
                     hit2.collider.gameObject.GetComponent<TipeOfView>().spotLook = true;
                     hit2.collider.gameObject.GetComponent<TipeOfView>().timer = 0;
-                    if (!tipeOfViews.Contains(hit2.collider.gameObject.GetComponent<TipeOfView>())) 
+                    if (!vc.tipeOfViews.Contains(hit2.collider.gameObject.GetComponent<TipeOfView>())) 
                     {
-                        tipeOfViews.Add(hit2.collider.gameObject.GetComponent<TipeOfView>());
+                        vc.tipeOfViews.Add(hit2.collider.gameObject.GetComponent<TipeOfView>());
                     }
                     Vertices[i + 1] = VertForward * hit2.distance * visibility;
                 }
@@ -88,7 +88,7 @@ public class ViewArea : MonoBehaviour
         }
         List<TipeOfView> tipeOfViewsToRemove = new List<TipeOfView>();
 
-        foreach (TipeOfView tp in tipeOfViews)
+        foreach (TipeOfView tp in vc.tipeOfViews)
         {
             if (tp.spotLook == true)
             {
@@ -103,7 +103,7 @@ public class ViewArea : MonoBehaviour
 
         foreach (TipeOfView tpToRemove in tipeOfViewsToRemove)
         {
-            tipeOfViews.Remove(tpToRemove);
+            vc.tipeOfViews.Remove(tpToRemove);
         }
         for (int i = 0, j = 0; i < triangles.Length; i += 3, j++)
         {
@@ -111,10 +111,7 @@ public class ViewArea : MonoBehaviour
             triangles[i + 1] = j + 1;
             triangles[i + 2] = j + 2;
         }
-        visionConeMesh.Clear();
-        visionConeMesh.vertices = Vertices;
-        visionConeMesh.triangles = triangles;
-        meshFilter_.mesh = visionConeMesh;
+        
     }
 
 

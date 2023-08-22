@@ -88,6 +88,11 @@ MonoBehaviour:
   cm: {fileID: 4001981043748720080}
   viewFlashLight: {fileID: 1698941449264340866, guid: 8e29b6640a88ea74e827c97452c53bee, type: 3}
   viewGhost: {fileID: 5850687432149707189, guid: 4e67634868d238c43a5c0b8b2c504132, type: 3}
+  lights: []
+  isStuning: 0
+  colors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4501172150960025252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.927, z: 1.03}
+  m_LocalPosition: {x: 0, y: 0, z: 0.606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
