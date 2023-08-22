@@ -26,11 +26,16 @@ public class PlayerSettings : MonoBehaviour
     public Camera cm;
     public GameObject viewFlashLight;
     public GameObject viewGhost;
+<<<<<<< HEAD
     public List<Light> lights = new List<Light>();
     public bool isStuning = false;
     public Color[] colors = new Color[2];
 	// Start is called before the first frame update
 	private void Awake()
+=======
+    // Start is called before the first frame update
+    private void Awake()
+>>>>>>> 91cf49164931ac798edef4b4f2b581f6bb77c691
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
