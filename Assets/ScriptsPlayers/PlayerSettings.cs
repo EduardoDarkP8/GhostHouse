@@ -40,7 +40,7 @@ public class PlayerSettings : MonoBehaviour
         playerBody.tag = tag;
 		if (tag == GameSettings.tags[0]) 
         {
-            speed = 5;
+            speed = 4;
             gameObject.AddComponent<PlayerDash>();
             gameObject.GetComponent<PlayerDash>().player = this;
             GameObject gm = Instantiate(viewGhost, playerBody.transform.position, Quaternion.identity) as GameObject;
@@ -51,7 +51,7 @@ public class PlayerSettings : MonoBehaviour
         }
         else if (tag == GameSettings.tags[1])
 		{
-            speed = 7;
+            speed = 6;
             gameObject.AddComponent<PlayerSalt>();
             gameObject.GetComponent<PlayerSalt>().player = this;
             gameObject.GetComponent<PlayerSalt>().saltPoint = saltPoint;
@@ -77,6 +77,21 @@ public class PlayerSettings : MonoBehaviour
         {
             cm.enabled = false;
             cm.gameObject.GetComponent<AudioListener>().enabled = false;
+        }
+    }
+    [PunRPC]
+    public void Stunning(PhotonMessageInfo info)
+    {
+        List<TipeOfView> tipeOfViews = playerBody.GetComponent<TipeOfView>().viewCharacter.tipeOfViews;
+        if (tipeOfViews.Count > 0)
+        {
+            foreach (TipeOfView view in tipeOfViews)
+            {
+                if (view.gameObject.tag == "Ghost")
+                {
+                    view.viewCharacter.pl.plState = playerStates.Stunned;
+                }
+            }
         }
     }
 }

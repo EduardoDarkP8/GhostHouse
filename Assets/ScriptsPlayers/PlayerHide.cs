@@ -18,11 +18,11 @@ public class PlayerHide : MonoBehaviour
         if (player.pv.IsMine) { 
         if (Input.GetButtonUp("Interact") && player.plState == playerStates.Hidden)
         {
-            StartCoroutine(exitCloset());
+                player.pv.RPC("exitClosetCourotine", RpcTarget.All);
         }
         else if (Input.GetButtonUp("Interact") && player.plState != playerStates.Hidden)
         {
-            StartCoroutine(findCloset());
+                player.pv.RPC("findClosetCourotine", RpcTarget.All);
         }
         }
     }
@@ -36,6 +36,10 @@ public class PlayerHide : MonoBehaviour
                 player.playerBody.GetComponent<Collider>().isTrigger = false;
                 player.transform.position = new Vector3(local.position.x, transform.position.y, local.position.z);
                 player.playerBody.GetComponent<MeshRenderer>().enabled = false;
+                foreach (Light l in player.lights)
+                {
+                    l.enabled = false;
+                }
                 cl.players.Add(gameObject);
             }
         }
@@ -46,12 +50,28 @@ public class PlayerHide : MonoBehaviour
         {
 
             player.transform.position = new Vector3(local.position.x, 0, local.position.z);
-            player.playerBody.GetComponent<Collider>().isTrigger = false;
-            player.playerBody.GetComponent<MeshRenderer>().enabled = true;
-            player.plState = playerStates.Stand;
-            find = false;
-            player.isStuning = true;
+            player.pv.RPC("getOutPhoton",RpcTarget.All);
         }
+    }
+    [PunRPC]
+    public void getOutPhoton(PhotonMessageInfo info)
+    { 
+        player.plState = playerStates.Stand;
+        player.playerBody.GetComponent<Collider>().isTrigger = false;
+        player.playerBody.GetComponent<MeshRenderer>().enabled = true;
+        foreach (Light l in player.lights)
+        {
+            l.enabled = true;
+        }
+        find = false;
+        player.isStuning = true;
+    }
+    [PunRPC]
+    public void findClosetCourotine(PhotonMessageInfo info)
+    {
+
+        StartCoroutine(findCloset());
+
     }
     IEnumerator findCloset()
     {
@@ -63,7 +83,7 @@ public class PlayerHide : MonoBehaviour
         }
     }
     [PunRPC]
-    void exitClosetCourotine(PhotonMessageInfo info) 
+    public void exitClosetCourotine(PhotonMessageInfo info) 
     {
 
         StartCoroutine(exitCloset());

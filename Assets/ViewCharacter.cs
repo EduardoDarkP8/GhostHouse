@@ -8,7 +8,7 @@ public class ViewCharacter : MonoBehaviour
     ViewArea va;
     public PlayerSettings pl;
     public List<TipeOfView> tipeOfViews = new List<TipeOfView>();
-    public float timer, powerTime = 3f;
+    public float powerTime = 3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,42 +19,31 @@ public class ViewCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //pl.pv.RPC("Stunning",RpcTarget.All);
-    }
-    [PunRPC]
-    void Stunning(PhotonMessageInfo info) 
-    {
-        timer = powerTime;
+
         if (pl.isStuning)
-        {
-            timer = 0;
-        }
-        else if (timer < powerTime)
         {
             foreach (Light lt in pl.lights)
             {
                 lt.color = pl.colors[1];
             }
-            foreach (TipeOfView view in tipeOfViews)
+            pl.pv.RPC("Stunning", RpcTarget.All);
+        }
+        else if (!pl.isStuning && pl.lights[0].color != pl.colors[0])
             {
-                if (view.gameObject.tag == "Ghost")
+                foreach (Light lt in pl.lights)
                 {
-                    view.viewCharacter.pl.plState = playerStates.Stunned;
+                    lt.color = pl.colors[0];
                 }
             }
-            timer++;
-        }
-        else if (timer >= powerTime && pl.isStuning)
-        {
-
-            foreach (Light lt in pl.lights)
-            {
-                lt.color = pl.colors[0];
-            }
-            pl.isStuning = false;
-
-        }
+                  
     }
+    IEnumerator StunTimer() 
+    {
+        pl.isStuning = true;
+        yield return new WaitForSeconds(powerTime);
+        pl.isStuning = false;
+    }
+    
     public void addMesh(MeshRenderer newMesh)
     {       
         newMesh.enabled = true;
