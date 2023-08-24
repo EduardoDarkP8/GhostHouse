@@ -29,6 +29,7 @@ public class PlayerSettings : MonoBehaviour
     public List<Light> lights = new List<Light>();
     public bool isStuning = false;
     public Color[] colors = new Color[2];
+    public float stunTimer = 3.0f, stunTime;
 	// Start is called before the first frame update
 
     private void Awake()
@@ -77,6 +78,18 @@ public class PlayerSettings : MonoBehaviour
         {
             cm.enabled = false;
             cm.gameObject.GetComponent<AudioListener>().enabled = false;
+            if (plState == playerStates.Stunned) 
+            {
+                stunTimer += Time.deltaTime;
+				if (stunTimer >= stunTime) 
+                {
+                    plState = playerStates.Stand;
+                }
+            }
+            else if (plState != playerStates.Stunned) 
+            {
+                stunTime = 0;
+            }
         }
     }
     [PunRPC]
@@ -92,6 +105,22 @@ public class PlayerSettings : MonoBehaviour
                     view.viewCharacter.pl.plState = playerStates.Stunned;
                 }
             }
+        }
+    }
+    [PunRPC]
+    public void ChangeColor2(PhotonMessageInfo info)
+    {
+        foreach (Light lt in lights)
+        {
+            lt.color = colors[1];
+        }
+    }
+    [PunRPC]
+    public void ChangeColor1(PhotonMessageInfo info)
+    {
+        foreach (Light lt in lights)
+        {
+            lt.color = colors[0];
         }
     }
 }

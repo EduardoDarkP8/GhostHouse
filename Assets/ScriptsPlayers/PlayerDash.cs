@@ -21,14 +21,16 @@ public class PlayerDash : MonoBehaviour
     }
 	private void FixedUpdate()
 	{
-		if (player.plState == playerStates.Dash && Input.GetButton("Jump")) 
-        {
-            player.rg.AddForce(player.playerBody.transform.forward * player.dashForce, ForceMode.Impulse);   
-        }
-        else if(player.plState == playerStates.Dash && !Input.GetButton("Jump"))
-		{
-            player.plState = playerStates.Stand;
-            player.playerBody.GetComponent<Collider>().enabled = true;
+        if (player.pv.IsMine) {
+            if (player.plState == playerStates.Dash && Input.GetButton("Jump"))
+            {
+                player.rg.AddForce(player.playerBody.transform.forward * player.dashForce, ForceMode.Impulse);
+            }
+            else if (player.plState == playerStates.Dash && !Input.GetButton("Jump"))
+            {
+                player.plState = playerStates.Stand;
+                player.playerBody.GetComponent<Collider>().enabled = true;
+            }
         }
 	}
     IEnumerator Dash() 

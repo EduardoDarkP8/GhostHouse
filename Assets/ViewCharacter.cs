@@ -22,21 +22,16 @@ public class ViewCharacter : MonoBehaviour
 
         if (pl.isStuning)
         {
-            foreach (Light lt in pl.lights)
-            {
-                lt.color = pl.colors[1];
-            }
+            pl.pv.RPC("ChangeColor2", RpcTarget.All);
             pl.pv.RPC("Stunning", RpcTarget.All);
         }
         else if (!pl.isStuning && pl.lights[0].color != pl.colors[0])
-            {
-                foreach (Light lt in pl.lights)
-                {
-                    lt.color = pl.colors[0];
-                }
-            }
+        {
+            pl.pv.RPC("ChangeColor1", RpcTarget.All);
+        }
                   
     }
+    
     IEnumerator StunTimer() 
     {
         pl.isStuning = true;

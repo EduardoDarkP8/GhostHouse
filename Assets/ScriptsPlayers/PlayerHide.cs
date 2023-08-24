@@ -32,10 +32,8 @@ public class PlayerHide : MonoBehaviour
         {
 			if (!cl.isUsing) 
             {
-                player.plState = playerStates.Hidden;
-                player.playerBody.GetComponent<Collider>().isTrigger = false;
                 player.transform.position = new Vector3(local.position.x, transform.position.y, local.position.z);
-                player.playerBody.GetComponent<MeshRenderer>().enabled = false;
+                player.pv.RPC("hidePhoton", RpcTarget.All);
                 foreach (Light l in player.lights)
                 {
                     l.enabled = false;
@@ -52,6 +50,13 @@ public class PlayerHide : MonoBehaviour
             player.transform.position = new Vector3(local.position.x, 0, local.position.z);
             player.pv.RPC("getOutPhoton",RpcTarget.All);
         }
+    }
+    [PunRPC]
+    public void hidePhoton(PhotonMessageInfo info)
+    {
+        player.plState = playerStates.Hidden;
+        player.playerBody.GetComponent<Collider>().isTrigger = false;
+        player.playerBody.GetComponent<MeshRenderer>().enabled = false;
     }
     [PunRPC]
     public void getOutPhoton(PhotonMessageInfo info)
