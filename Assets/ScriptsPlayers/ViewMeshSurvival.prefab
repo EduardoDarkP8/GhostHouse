@@ -58,7 +58,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   visionConeResolution: 60
-  tipeOfViews: []
 --- !u!136 &7238795911980925850
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -95,6 +94,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pl: {fileID: 0}
+  tipeOfViews: []
+  powerTime: 3
 --- !u!108 &628835329335488496
 Light:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698941449264340866}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
@@ -196,7 +197,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3527284121405163173}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0

@@ -93,6 +93,8 @@ MonoBehaviour:
   colors:
   - {r: 1, g: 1, b: 1, a: 0}
   - {r: 0, g: 0.098634005, b: 1, a: 0}
+  stunTimer: 0
+  stunTime: 0
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0

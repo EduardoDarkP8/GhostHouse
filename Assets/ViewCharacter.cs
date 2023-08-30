@@ -7,7 +7,6 @@ public class ViewCharacter : MonoBehaviour
 {
     ViewArea va;
     public PlayerSettings pl;
-    public List<TipeOfView> tipeOfViews = new List<TipeOfView>();
     public float powerTime = 3f;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +22,7 @@ public class ViewCharacter : MonoBehaviour
         if (pl.isStuning)
         {
             pl.pv.RPC("ChangeColor2", RpcTarget.All);
-            pl.pv.RPC("Stunning", RpcTarget.All);
+            //pl.pv.RPC("Stunning", RpcTarget.All);
         }
         else if (!pl.isStuning && pl.lights[0].color != pl.colors[0])
         {
@@ -39,16 +38,29 @@ public class ViewCharacter : MonoBehaviour
         pl.isStuning = false;
     }
     
-    public void addMesh(MeshRenderer newMesh)
-    {       
-        newMesh.enabled = true;
-    }
-    public void removeMesh(MeshRenderer newMesh)
+    private void OnTriggerEnter(Collider other)
     {
-        newMesh.enabled = false;
+        if (other.tag == "Survival" || other.tag == "Ghost")
+        {
+            if (other.GetComponent<TipeOfView>())
+            {
+                other.GetComponent<TipeOfView>().TurnOn();
+            }
+        }
     }
-   
-        
-    
-    
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Survival" || other.tag == "Ghost")
+        {
+            if (other.GetComponent<TipeOfView>())
+            {
+                other.GetComponent<TipeOfView>().TurnOn();
+            }
+        }
+    }
+
+
+
+
+
 }

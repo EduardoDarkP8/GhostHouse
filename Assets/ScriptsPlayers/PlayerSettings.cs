@@ -37,22 +37,23 @@ public class PlayerSettings : MonoBehaviour
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
-        tag = GameSettings.tags[1];
+        pv.RPC("SetTag",RpcTarget.All);
         playerBody.tag = tag;
 		if (tag == GameSettings.tags[0]) 
         {
-            speed = 4;
+            speed = 5.5f;
             gameObject.AddComponent<PlayerDash>();
             gameObject.GetComponent<PlayerDash>().player = this;
             GameObject gm = Instantiate(viewGhost, playerBody.transform.position, Quaternion.identity) as GameObject;
             gm.transform.SetParent(playerBody.transform);
+            lights.Add(gm.GetComponent<Light>());
             gm.name = "ViewMesh";
             
             
         }
         else if (tag == GameSettings.tags[1])
 		{
-            speed = 6;
+            speed = 6.5f;
             gameObject.AddComponent<PlayerSalt>();
             gameObject.GetComponent<PlayerSalt>().player = this;
             gameObject.GetComponent<PlayerSalt>().saltPoint = saltPoint;
@@ -68,6 +69,10 @@ public class PlayerSettings : MonoBehaviour
 		if (pv.IsMine) 
         {
             playerBody.GetComponent<MeshRenderer>().enabled = true;
+            foreach (Light l in lights)
+            {
+                l.enabled = true;
+            }
         }
     }
 
@@ -81,7 +86,7 @@ public class PlayerSettings : MonoBehaviour
             if (plState == playerStates.Stunned) 
             {
                 stunTimer += Time.deltaTime;
-				if (stunTimer >= stunTime) 
+				if (stunTime >= stunTimer) 
                 {
                     plState = playerStates.Stand;
                 }
@@ -93,26 +98,21 @@ public class PlayerSettings : MonoBehaviour
         }
     }
     [PunRPC]
-    public void Stunning(PhotonMessageInfo info)
+    public void SetTag(PhotonMessageInfo info) 
     {
-        List<TipeOfView> tipeOfViews = playerBody.GetComponent<TipeOfView>().viewCharacter.tipeOfViews;
-        if (tipeOfViews.Count > 0)
-        {
-            foreach (TipeOfView view in tipeOfViews)
-            {
-                if (view.gameObject.tag == "Ghost")
-                {
-                    view.viewCharacter.pl.plState = playerStates.Stunned;
-                }
-            }
-        }
+        tag = GameSettings.tags[0];
+    }
+    [PunRPC]
+    public void Stunning(PhotonMessageInfo info,PlayerSettings pl)
+    {
+        pl.plState = playerStates.Stunned;
     }
     [PunRPC]
     public void ChangeColor2(PhotonMessageInfo info)
     {
         foreach (Light lt in lights)
         {
-            lt.color = colors[1];
+            lt.color = colors[0];
         }
     }
     [PunRPC]

@@ -23,15 +23,33 @@ public class TipeOfView : MonoBehaviour
 		if (!viewCharacter.pl.pv.IsMine) 
         {
             if (timer >= change)
-            {
+            {   
                 spotLook = false;
             }
             if (!spotLook)
             {
-                viewCharacter.removeMesh(meshRenderer);
+                meshRenderer.enabled = false;
+                foreach (Light l in viewCharacter.pl.lights)
+                {
+                    l.enabled = false;
+                }
+            }
+            else if (spotLook) 
+            {
+                meshRenderer.enabled = true;
+                foreach (Light l in viewCharacter.pl.lights)
+                {
+                    l.enabled = true;
+                }
             }
             timer += Time.deltaTime;
         }
 		
     }
+    public void TurnOn() 
+    {
+        spotLook = true;
+        timer = 0;
+    }
+	
 }

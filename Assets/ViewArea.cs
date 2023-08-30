@@ -65,12 +65,7 @@ public class ViewArea : MonoBehaviour
             {
 				if (hit2.collider.gameObject.GetComponent<TipeOfView>()) 
                 {
-                    hit2.collider.gameObject.GetComponent<TipeOfView>().spotLook = true;
-                    hit2.collider.gameObject.GetComponent<TipeOfView>().timer = 0;
-                    if (!vc.tipeOfViews.Contains(hit2.collider.gameObject.GetComponent<TipeOfView>())) 
-                    {
-                        vc.tipeOfViews.Add(hit2.collider.gameObject.GetComponent<TipeOfView>());
-                    }
+                    hit2.collider.gameObject.GetComponent<TipeOfView>().TurnOn();
                     Vertices[i + 1] = VertForward * hit2.distance * visibility;
                 }
 				else 
@@ -86,25 +81,7 @@ public class ViewArea : MonoBehaviour
 
             Currentangle += angleIcrement;
         }
-        List<TipeOfView> tipeOfViewsToRemove = new List<TipeOfView>();
-
-        foreach (TipeOfView tp in vc.tipeOfViews)
-        {
-            if (tp.spotLook == true)
-            {
-                vc.addMesh(tp.meshRenderer);
-            }
-            else if(tp.spotLook == false)
-            {
-                vc.removeMesh(tp.meshRenderer);
-                tipeOfViewsToRemove.Add(tp);
-            }
-        }
-
-        foreach (TipeOfView tpToRemove in tipeOfViewsToRemove)
-        {
-            vc.tipeOfViews.Remove(tpToRemove);
-        }
+        
         for (int i = 0, j = 0; i < triangles.Length; i += 3, j++)
         {
             triangles[i] = 0;
