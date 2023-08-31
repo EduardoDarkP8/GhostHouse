@@ -6,8 +6,22 @@ using Photon.Pun;
 using Photon.Realtime;
 public class Network : MonoBehaviourPunCallbacks
 {
+    public static int[] numbers = new int[10];
     private void Awake()
     {
+        bool change = true;
+		for (int i = 0; i < numbers.Length; i++) 
+        {
+			if (change) 
+            {
+                numbers[i] = 1;
+            }
+            else
+			{
+                numbers[i] = 0;
+            }
+            change = !change;
+        }
         print("Iniciado Network...");
         PhotonNetwork.LocalPlayer.NickName = "Player" + Random.Range(0,1000);
         PhotonNetwork.ConnectUsingSettings();

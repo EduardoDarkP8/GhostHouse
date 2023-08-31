@@ -37,7 +37,7 @@ public class PlayerSettings : MonoBehaviour
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
-        pv.RPC("SetTag",RpcTarget.All);
+        tag = GameSettings.tags[0];
         playerBody.tag = tag;
 		if (tag == GameSettings.tags[0]) 
         {
@@ -96,11 +96,6 @@ public class PlayerSettings : MonoBehaviour
                 stunTime = 0;
             }
         }
-    }
-    [PunRPC]
-    public void SetTag(PhotonMessageInfo info) 
-    {
-        tag = GameSettings.tags[0];
     }
     [PunRPC]
     public void Stunning(PhotonMessageInfo info,PlayerSettings pl)
