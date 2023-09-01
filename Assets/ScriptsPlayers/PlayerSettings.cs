@@ -30,15 +30,19 @@ public class PlayerSettings : MonoBehaviour
     public bool isStuning = false;
     public Color[] colors = new Color[2];
     public float stunTimer = 3.0f, stunTime;
-	// Start is called before the first frame update
+    public int tagIndex;
+    public Transform canvas;
+    public GameObject[] trivias = new GameObject[3];
+    public int life;
 
     private void Awake()
 
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
-        tag = GameSettings.tags[0];
+        tag = GameSettings.tags[tagIndex];
         playerBody.tag = tag;
+        canvas = GameObject.Find("CanvasLocal").GetComponent<Transform>();
 		if (tag == GameSettings.tags[0]) 
         {
             speed = 5.5f;
@@ -48,7 +52,7 @@ public class PlayerSettings : MonoBehaviour
             gm.transform.SetParent(playerBody.transform);
             lights.Add(gm.GetComponent<Light>());
             gm.name = "ViewMesh";
-            
+            life = 1;
             
         }
         else if (tag == GameSettings.tags[1])
@@ -64,7 +68,7 @@ public class PlayerSettings : MonoBehaviour
             gm.name = "ViewMesh";
             lights.Add(gm.GetComponent<Light>());
             lights.Add(gm.transform.Find("Light").GetComponent<Light>());
-
+            life = 2;
         }
 		if (pv.IsMine) 
         {

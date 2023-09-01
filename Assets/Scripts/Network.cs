@@ -61,7 +61,14 @@ public class Network : MonoBehaviourPunCallbacks
 	public override void OnJoinedRoom()
 	{
         print("Entrou na Sala: " + PhotonNetwork.NickName);
-        PhotonNetwork.Instantiate("PlayerObject", transform.position, Quaternion.identity);
+        if (numbers[PhotonNetwork.PlayerList.Length-1] == 1) 
+        {
+            PhotonNetwork.Instantiate("PlayerSurvivalObject", transform.position, Quaternion.identity);
+        }
+        else if (numbers[PhotonNetwork.PlayerList.Length - 1] == 0)
+        {
+            PhotonNetwork.Instantiate("PlayerGhostObject", transform.position, Quaternion.identity);
+        }
     }
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4977052263087742058}
   - component: {fileID: 4761646986578411068}
   m_Layer: 0
-  m_Name: PlayerObject
+  m_Name: PlayerSurvivalObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,6 +95,7 @@ MonoBehaviour:
   - {r: 0, g: 0.098634005, b: 1, a: 0}
   stunTimer: 0
   stunTime: 0
+  tagIndex: 1
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0

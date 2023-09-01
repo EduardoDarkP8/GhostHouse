@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (player.pv.IsMine)
         {
-            player.rg.velocity = new Vector3(x, 0, z) * player.speed;
+            player.rg.velocity = new Vector3(x, 0, z).normalized * player.speed;
             player.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             player.playerBody.transform.rotation = target;
         }

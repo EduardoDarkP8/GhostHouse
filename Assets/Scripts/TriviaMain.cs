@@ -21,8 +21,6 @@ public class TriviaMain : MonoBehaviour
         RandomizeWord();
         SetButtonsLetter();
     }
-
-    
     void Update()
     {
         time -= Time.deltaTime;
