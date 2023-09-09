@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4580481426963922840}
   - component: {fileID: 5200144921158938894}
   - component: {fileID: 3660684888678390794}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ViewMeshGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pl: {fileID: 0}
-  tipeOfViews: []
   powerTime: 3
 --- !u!136 &5200144921158938894
 CapsuleCollider:

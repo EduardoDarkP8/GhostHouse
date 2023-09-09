@@ -9,14 +9,17 @@ public class PlayerDash : MonoBehaviour
     
     void Update()
     {
-		if (Input.GetButtonDown("Jump") && time >= targetTime) 
+        if (player.pv.IsMine)
         {
-            time = 0;
-            StartCoroutine(Dash());
-        }
-        else if (time <=targetTime) 
-        {
-            time += Time.deltaTime;
+            if (Input.GetButtonDown("Jump") && time >= targetTime)
+            {
+                time = 0;
+                StartCoroutine(Dash());
+            }
+            else if (time <= targetTime)
+            {
+                time += Time.deltaTime;
+            }
         }
     }
 	private void FixedUpdate()

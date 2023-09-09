@@ -16,6 +16,8 @@ public class PlayerSalt : MonoBehaviour
             {
                 time = 0;
                 player.pv.RPC("NetworkSalt", RpcTarget.All);
+                GameObject gm = PhotonNetwork.Instantiate("Salt", player.saltPoint.position, Quaternion.identity);
+                gm.GetComponent<Salt>().ps = this;
             }
             else if (time <= targetTime)
             {
@@ -38,8 +40,11 @@ public class PlayerSalt : MonoBehaviour
             player.playerBody.GetComponent<Collider>().enabled = false;
             player.plState = playerStates.Salt;
             yield return new WaitForSeconds(0.3f);
-            Instantiate(player.salt, player.saltPoint.position, Quaternion.identity);
             player.plState = playerStates.Stand;
             player.playerBody.GetComponent<Collider>().enabled = true;
+    }
+    public void DestroySalt(GameObject gm) 
+    {
+        PhotonNetwork.Destroy(gm);
     }
 }

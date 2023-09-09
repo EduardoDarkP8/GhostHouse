@@ -7,7 +7,8 @@ public class PlayerHide : MonoBehaviour
 {
     public PlayerSettings player;
     public bool find;
-
+    public bool hideBool;
+    public bool exitBool;
     void Start()
     {
 
@@ -18,12 +19,24 @@ public class PlayerHide : MonoBehaviour
         if (player.pv.IsMine) { 
         if (Input.GetButtonUp("Interact") && player.plState == playerStates.Hidden)
         {
-                player.pv.RPC("exitClosetCourotine", RpcTarget.All);
-        }
+                exitBool = true;
+                
+            }
         else if (Input.GetButtonUp("Interact") && player.plState != playerStates.Hidden)
         {
-                player.pv.RPC("findClosetCourotine", RpcTarget.All);
+                hideBool = true;
         }
+        }
+		
+        if (hideBool) 
+        {
+            player.pv.RPC("findClosetCourotine", RpcTarget.All);
+            hideBool = false;
+        }
+		if(exitBool)
+        {
+            player.pv.RPC("exitClosetCourotine", RpcTarget.All);
+            exitBool = false;
         }
     }
     public void hide(Transform local, Closet cl)
@@ -42,6 +55,15 @@ public class PlayerHide : MonoBehaviour
             }
         }
     }
+    IEnumerator findCloset()
+    {
+        find = true;
+        yield return new WaitForSeconds(0.1f);
+        if (player.plState != playerStates.Hidden)
+        {
+            find = false;
+        }
+    }
     public void getOut(Transform local)
     {
         if (player.plState == playerStates.Hidden)
@@ -55,49 +77,25 @@ public class PlayerHide : MonoBehaviour
     public void hidePhoton(PhotonMessageInfo info)
     {
         player.plState = playerStates.Hidden;
-        player.playerBody.GetComponent<Collider>().isTrigger = false;
-        player.playerBody.GetComponent<MeshRenderer>().enabled = false;
     }
     [PunRPC]
     public void getOutPhoton(PhotonMessageInfo info)
     { 
         player.plState = playerStates.Stand;
-        player.playerBody.GetComponent<Collider>().isTrigger = false;
-        player.playerBody.GetComponent<MeshRenderer>().enabled = true;
-        foreach (Light l in player.lights)
-        {
-            l.enabled = true;
-        }
         find = false;
-        player.isStuning = true;
+        player.exit = true;
+        print("AA");
     }
     [PunRPC]
     public void findClosetCourotine(PhotonMessageInfo info)
     {
-
         StartCoroutine(findCloset());
-
     }
-    IEnumerator findCloset()
-    {
-        find = true;
-        yield return new WaitForSeconds(0.1f);
-        if (player.plState != playerStates.Hidden)
-        {
-            find = false;
-        }
-    }
+    
     [PunRPC]
     public void exitClosetCourotine(PhotonMessageInfo info) 
     {
-
-        StartCoroutine(exitCloset());
-        
-    }
-    IEnumerator exitCloset()
-    {
         find = false;
-        yield return new WaitForSeconds(0.5f);
     }
     private void OnTriggerStay(Collider other)
     {

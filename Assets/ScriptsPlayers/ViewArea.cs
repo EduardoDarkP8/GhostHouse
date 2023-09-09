@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Photon.Pun;
 public class ViewArea : MonoBehaviour
 {
     public Material visionConeMaterial;
@@ -63,8 +63,12 @@ public class ViewArea : MonoBehaviour
             }
             else if (Physics.Raycast(transform.position, RaycastDirection, out hit2, visionRange, body)) 
             {
-				if (hit2.collider.gameObject.GetComponent<TipeOfView>()) 
+                if (hit2.collider.gameObject.GetComponent<TipeOfView>() && hit2.collider.gameObject.GetComponent<TipeOfView>().viewCharacter.pl.plState != playerStates.Hidden) 
                 {
+                    if (vc.pl.isStuning)
+                    {
+                        hit2.collider.gameObject.GetComponent<TipeOfView>().viewCharacter.pl.pv.RPC("Stun", RpcTarget.All);
+                    }
                     hit2.collider.gameObject.GetComponent<TipeOfView>().TurnOn();
                     Vertices[i + 1] = VertForward * hit2.distance * visibility;
                 }
@@ -88,7 +92,10 @@ public class ViewArea : MonoBehaviour
             triangles[i + 1] = j + 1;
             triangles[i + 2] = j + 2;
         }
-        
+        /*visionConeMesh.Clear();
+        visionConeMesh.vertices = Vertices;
+        visionConeMesh.triangles = triangles;
+        meshFilter_.mesh = visionConeMesh;*/
     }
 
 

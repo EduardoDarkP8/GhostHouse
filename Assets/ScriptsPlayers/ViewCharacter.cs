@@ -7,7 +7,6 @@ public class ViewCharacter : MonoBehaviour
 {
     ViewArea va;
     public PlayerSettings pl;
-    public float powerTime = 3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,43 +18,63 @@ public class ViewCharacter : MonoBehaviour
     void Update()
     {
 
-        if (pl.isStuning)
-        {
-            pl.pv.RPC("ChangeColor2", RpcTarget.All);
-            //pl.pv.RPC("Stunning", RpcTarget.All);
-        }
-        else if (!pl.isStuning && pl.lights[0].color != pl.colors[0])
-        {
-            pl.pv.RPC("ChangeColor1", RpcTarget.All);
-        }
-                  
+          
     }
     
-    IEnumerator StunTimer() 
-    {
-        pl.isStuning = true;
-        yield return new WaitForSeconds(powerTime);
-        pl.isStuning = false;
-    }
+    
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Survival" || other.tag == "Ghost")
         {
-            if (other.GetComponent<TipeOfView>())
+            if (other.GetComponent<TipeOfView>() == null)
             {
-                other.GetComponent<TipeOfView>().TurnOn();
+                return;
             }
+            else
+            {
+
+                TipeOfView tov = other.GetComponent<TipeOfView>();
+                if (tov != null)
+                {
+                    if (pl.isStuning)
+                    {
+                        tov.viewCharacter.pl.pv.RPC("Stun", RpcTarget.All);
+                    }
+                    if (tov.viewCharacter.pl.plState != playerStates.Hidden)
+                    {
+                        other.GetComponent<TipeOfView>().TurnOn();
+                    }
+                }
+            }
+
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Survival" || other.tag == "Ghost")
         {
-            if (other.GetComponent<TipeOfView>())
+            if (other.GetComponent<TipeOfView>() == null)
             {
-                other.GetComponent<TipeOfView>().TurnOn();
+                return;
             }
+            else
+            {
+
+                TipeOfView tov = other.GetComponent<TipeOfView>();
+                if (tov != null)
+                {
+                    if (pl.isStuning)
+                    {
+                        tov.viewCharacter.pl.pv.RPC("Stun", RpcTarget.All);
+                    }
+                    if (tov.viewCharacter.pl.plState != playerStates.Hidden)
+                    {
+                        other.GetComponent<TipeOfView>().TurnOn();
+                    }
+                }
+            }
+
         }
     }
 

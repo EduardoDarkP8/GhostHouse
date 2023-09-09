@@ -96,6 +96,15 @@ MonoBehaviour:
   stunTimer: 0
   stunTime: 0
   tagIndex: 1
+  canvas: {fileID: 0}
+  trivias:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  life: 0
+  powerTime: 3
+  powerCount: 0
+  exit: 0
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0

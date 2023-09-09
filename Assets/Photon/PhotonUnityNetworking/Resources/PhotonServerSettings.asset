@@ -59,6 +59,11 @@ MonoBehaviour:
   - ChangeColor1
   - ChangeColor2
   - SetTag
+  - PunDestroy
+  - DestroyEnumerable
+  - DestroyObject
+  - Stun
+  - StunTimerRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
