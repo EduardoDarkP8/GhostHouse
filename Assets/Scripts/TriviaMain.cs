@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Pun;
 public class TriviaMain : MonoBehaviour
 {
     public List<TriviaLetters> letters = new List<TriviaLetters>();
@@ -25,6 +25,10 @@ public class TriviaMain : MonoBehaviour
     {
         time -= Time.deltaTime;
         timer.text = ((int)time).ToString();
+        if (time < 0 || pl.plState != playerStates.Fight) 
+        {
+            pl.pv.RPC("ChangeState", RpcTarget.All, playerStates.Loser);
+        }
     }
     public void SetButtonsLetter() 
     {
@@ -94,6 +98,7 @@ public class TriviaMain : MonoBehaviour
         if (formWord == word) 
         {
             Destroy(gameObject);
+            pl.pv.RPC("ChangeState",RpcTarget.All,playerStates.Winner);
         }
     }
 }

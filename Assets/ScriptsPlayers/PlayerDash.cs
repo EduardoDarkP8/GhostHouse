@@ -11,7 +11,7 @@ public class PlayerDash : MonoBehaviour
     {
         if (player.pv.IsMine)
         {
-            if (Input.GetButtonDown("Jump") && time >= targetTime)
+            if (Input.GetButtonDown("Jump") && time >= targetTime && player.plState != playerStates.Stunned)
             {
                 time = 0;
                 StartCoroutine(Dash());

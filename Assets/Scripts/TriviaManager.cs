@@ -1,34 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
-
-[System.Serializable]
 public class TriviaManager : MonoBehaviour
 {
-    public TextAsset wordsJSON;
-    string conteudo;
-    public Dictionary<string, List<string>> dictionary = new Dictionary<string, List<string>>();
+	public PlayerSettings player;
+	public GameObject trivia;
+	
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.GetComponent<TipeOfView>())
+		{
+			PlayerSettings ps = collision.gameObject.GetComponent<TipeOfView>().viewCharacter.pl;
+			if (player.canFight && ps.canFight) 
+			{
+				player.targetPl = ps;
+				GameObject gm = Instantiate(trivia);
+				gm.transform.IsChildOf(GameObject.Find("Canvas").transform);
+			}
+		}
+	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        conteudo = wordsJSON.text;
-        Debug.Log("JSON Content: " + conteudo); // Verifique se o conteúdo está correto
-        dictionary = JsonUtility.FromJson<Dictionary<string, List<string>>>(conteudo);
-
-        foreach (var kvp in dictionary)
-        {
-            Debug.Log("Número de letras: " + kvp.Key);
-            foreach (var word in kvp.Value)
-            {
-                Debug.Log("Palavra: " + word);
-            }
-        }
-    }
-    void Update()
-    {
-        
-    }
 }

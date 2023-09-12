@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7134258985845032022}
   - component: {fileID: 4977052263087742058}
   - component: {fileID: 4761646986578411068}
+  - component: {fileID: 6957652095342291983}
   m_Layer: 0
   m_Name: PlayerGhostObject
   m_TagString: Untagged
@@ -80,6 +81,7 @@ MonoBehaviour:
   rg: {fileID: 0}
   playerBody: {fileID: 4141505884451449355}
   speed: 0
+  bonuSpeed: 0
   plState: 0
   dashForce: 15
   saltPoint: {fileID: 9054278845980690216}
@@ -105,6 +107,8 @@ MonoBehaviour:
   powerTime: 3
   powerCount: 0
   exit: 0
+  targetPl: {fileID: 0}
+  canFight: 0
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +126,8 @@ MonoBehaviour:
   z: 0
   joystick: {fileID: 0}
   joystickInstance: {fileID: 0}
+  timer: 0
+  targetTime: 0.25
 --- !u!114 &4977052263087742058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +167,20 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &6957652095342291983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093634707809647038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d36e0621f0dd374b8225323d93e0d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 7739163173834089586}
+  trivia: {fileID: 5759146972031430169, guid: 0e6dd17f805fa8c42b3a0e072d4ba602, type: 3}
 --- !u!1 &4141505884451449355
 GameObject:
   m_ObjectHideFlags: 0

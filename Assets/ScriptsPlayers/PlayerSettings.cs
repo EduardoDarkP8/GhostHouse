@@ -12,12 +12,16 @@ public enum playerStates
     SeekCloset,
     Hidden,
     Stunned,
+    Fight,
+    Winner,
+    Loser
 }
 public class PlayerSettings : MonoBehaviour
 {
     public Rigidbody rg;
     public GameObject playerBody;
     public float speed;
+    public float bonuSpeed;
     public playerStates plState;
     public float dashForce;
     public Transform saltPoint;
@@ -36,7 +40,9 @@ public class PlayerSettings : MonoBehaviour
     public int life;
     public float powerTime = 3f, powerCount;
     public bool exit;
-
+    public PlayerSettings targetPl;
+    public bool canFight;
+    
     private void Awake()
 
     {
@@ -61,6 +67,7 @@ public class PlayerSettings : MonoBehaviour
         else if (tag == GameSettings.tags[1])
         {
             speed = 6.5f;
+            bonuSpeed = speed;
             gameObject.AddComponent<PlayerSalt>();
             gameObject.GetComponent<PlayerSalt>().player = this;
             gameObject.GetComponent<PlayerSalt>().saltPoint = saltPoint;
@@ -88,6 +95,38 @@ public class PlayerSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (plState != playerStates.Loser || plState != playerStates.Winner || plState != playerStates.Fight) 
+        {
+			if (!canFight) 
+            {
+                StartCoroutine(CanFight(2f));
+            }
+        }
+        if (plState == playerStates.Loser || plState == playerStates.Winner)
+        {
+			if (tag == "Survival") 
+            { 
+            if(plState == playerStates.Winner)
+			{
+                isStuning = true;
+            }
+			else if(plState == playerStates.Loser)
+            {
+                PhotonNetwork.Destroy(pv);
+            }
+            }
+            if (tag == "Ghost")
+            {
+				if (targetPl.plState == playerStates.Loser && plState == playerStates.Winner) 
+                {
+                    PhotonNetwork.Destroy(pv);
+                }
+				else 
+                {
+                    pv.RPC("Stun", RpcTarget.All);
+                }
+            }
+        }
         if (!pv.IsMine)
         {
             cm.enabled = false;
@@ -132,11 +171,14 @@ public class PlayerSettings : MonoBehaviour
             foreach (Light lt in lights)
             {
                 lt.color = colors[1];
+
             }
+            speed = bonuSpeed + 2;
             powerCount += Time.deltaTime;
             if (powerCount >= powerTime)
             {
                 isStuning = false;
+                speed = bonuSpeed;
                 powerCount = 0;
             }
             
@@ -148,11 +190,22 @@ public class PlayerSettings : MonoBehaviour
                 lt.color = colors[0];
             }
         }
+        
     }
         [PunRPC]
         public void Stun(PhotonMessageInfo info)
         {
             plState = playerStates.Stunned;
         }
+        [PunRPC]
+         public void ChangeState(PhotonMessageInfo info, playerStates state)
+         {
+            plState = state;
+         }
+         IEnumerator CanFight(float t) 
+         {
+            yield return new WaitForSeconds(t);
+            canFight = true;
+         }
 
 }   

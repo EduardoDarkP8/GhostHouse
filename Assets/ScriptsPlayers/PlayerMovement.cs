@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     Quaternion target;
     public bl_Joystick joystick;
     public GameObject joystickInstance;
+    public float timer, targetTime=0.25f;
 
     void Start()
     {
@@ -25,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     {
 		if (player.pv.IsMine) 
         {
+            if (player.plState != playerStates.Fight || player.plState != playerStates.Loser || player.plState != playerStates.Winner) 
+            { 
+            
             if (player.plState == playerStates.Stand || player.plState == playerStates.Walk)
             {
                 x = joystick.Horizontal;
@@ -46,6 +50,17 @@ public class PlayerMovement : MonoBehaviour
                 
                 target = Quaternion.Euler(0, Mathf.Atan2(x, z) * Mathf.Rad2Deg, 0);
                 player.plState = playerStates.Walk;
+            }
+            }
+            else if (player.plState != playerStates.Loser || player.plState != playerStates.Winner) 
+            {
+                timer += Time.deltaTime;
+				if (timer > targetTime) 
+                {
+                    player.pv.RPC("ChangeState", RpcTarget.All, playerStates.Stand);
+                    player.life--;
+                    player.targetPl = null;
+                }
             }
         }
     }
