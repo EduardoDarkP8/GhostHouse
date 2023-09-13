@@ -52,15 +52,16 @@ public class PlayerMovement : MonoBehaviour
                 player.plState = playerStates.Walk;
             }
             }
-            else if (player.plState != playerStates.Loser || player.plState != playerStates.Winner) 
+            
+        }
+        if (player.plState == playerStates.Loser || player.plState == playerStates.Winner)
+        {
+            timer += Time.deltaTime;
+            if (timer > targetTime)
             {
-                timer += Time.deltaTime;
-				if (timer > targetTime) 
-                {
-                    player.pv.RPC("ChangeState", RpcTarget.All, playerStates.Stand);
-                    player.life--;
-                    player.targetPl = null;
-                }
+                player.plState = playerStates.Stand;
+                player.targetPl = null;
+                player.life--;
             }
         }
     }

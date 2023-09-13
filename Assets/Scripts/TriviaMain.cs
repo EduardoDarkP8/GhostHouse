@@ -27,7 +27,8 @@ public class TriviaMain : MonoBehaviour
         timer.text = ((int)time).ToString();
         if (time < 0 || pl.plState != playerStates.Fight) 
         {
-            pl.pv.RPC("ChangeState", RpcTarget.All, playerStates.Loser);
+            pl.plState = playerStates.Loser;
+            Destroy(gameObject);
         }
     }
     public void SetButtonsLetter() 
@@ -98,7 +99,7 @@ public class TriviaMain : MonoBehaviour
         if (formWord == word) 
         {
             Destroy(gameObject);
-            pl.pv.RPC("ChangeState",RpcTarget.All,playerStates.Winner);
+            pl.plState = playerStates.Winner;
         }
     }
 }

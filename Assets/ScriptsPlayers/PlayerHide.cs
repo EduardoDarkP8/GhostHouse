@@ -84,7 +84,6 @@ public class PlayerHide : MonoBehaviour
         player.plState = playerStates.Stand;
         find = false;
         player.exit = true;
-        print("AA");
     }
     [PunRPC]
     public void findClosetCourotine(PhotonMessageInfo info)

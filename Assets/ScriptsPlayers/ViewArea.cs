@@ -72,6 +72,7 @@ public class ViewArea : MonoBehaviour
                     hit2.collider.gameObject.GetComponent<TipeOfView>().TurnOn();
                     Vertices[i + 1] = VertForward * hit2.distance * visibility;
                 }
+                
 				else 
                 {
                     Vertices[i + 1] = VertForward * hit2.distance * visibility;

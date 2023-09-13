@@ -94,8 +94,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pl: {fileID: 0}
-  tipeOfViews: []
-  powerTime: 3
 --- !u!108 &628835329335488496
 Light:
   m_ObjectHideFlags: 0

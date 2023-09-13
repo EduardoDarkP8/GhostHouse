@@ -42,7 +42,7 @@ public class PlayerSettings : MonoBehaviour
     public bool exit;
     public PlayerSettings targetPl;
     public bool canFight;
-    
+    public bool change;
     private void Awake()
 
     {
@@ -95,7 +95,23 @@ public class PlayerSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (plState != playerStates.Loser || plState != playerStates.Winner || plState != playerStates.Fight) 
+		if (change) 
+        { 
+		if (plState == playerStates.Fight) 
+        {
+            pv.RPC("Fight", RpcTarget.All);
+        }
+        else if (plState == playerStates.Loser) 
+        {
+            pv.RPC("Lose", RpcTarget.All);
+        }
+        else if (plState == playerStates.Winner)
+        {
+            pv.RPC("Win", RpcTarget.All);
+        }
+            change = false;
+        }
+        if (plState != playerStates.Loser || plState != playerStates.Winner || plState != playerStates.Fight) 
         {
 			if (!canFight) 
             {
@@ -109,11 +125,20 @@ public class PlayerSettings : MonoBehaviour
             if(plState == playerStates.Winner)
 			{
                 isStuning = true;
+					if (life <= 0) 
+                    {
+                        PhotonNetwork.Destroy(pv);
+                    }
             }
-			else if(plState == playerStates.Loser)
-            {
-                PhotonNetwork.Destroy(pv);
-            }
+                if (plState == playerStates.Loser)
+                {
+                    isStuning = true;
+                    if (life <= 0)
+                    {
+                        PhotonNetwork.Destroy(pv);
+                    }
+                }
+
             }
             if (tag == "Ghost")
             {
@@ -198,11 +223,26 @@ public class PlayerSettings : MonoBehaviour
             plState = playerStates.Stunned;
         }
         [PunRPC]
-         public void ChangeState(PhotonMessageInfo info, playerStates state)
-         {
-            plState = state;
-         }
-         IEnumerator CanFight(float t) 
+        public void Win(PhotonMessageInfo info)
+        {
+            plState = playerStates.Winner;
+        }
+        [PunRPC]
+        public void Lose(PhotonMessageInfo info)
+        {
+            plState = playerStates.Loser;
+        }
+        [PunRPC]
+        public void Fight(PhotonMessageInfo info)
+        {
+            plState = playerStates.Fight;
+        }
+        [PunRPC]
+        public void Stand(PhotonMessageInfo info)
+        {
+            plState = playerStates.Stand;
+        }
+    IEnumerator CanFight(float t) 
          {
             yield return new WaitForSeconds(t);
             canFight = true;
