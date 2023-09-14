@@ -8,4 +8,5 @@ public class Closet : MonoBehaviour
     public bool used;
     public Transform jumpPoint;
     public bool isUsing = false;
+    public Light light;
 }

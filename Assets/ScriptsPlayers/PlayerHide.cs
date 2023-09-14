@@ -9,6 +9,7 @@ public class PlayerHide : MonoBehaviour
     public bool find;
     public bool hideBool;
     public bool exitBool;
+    public Light lightToDestroy;
     void Start()
     {
 
@@ -21,10 +22,14 @@ public class PlayerHide : MonoBehaviour
         {
                 exitBool = true;
                 
-            }
+        }
         else if (Input.GetButtonUp("Interact") && player.plState != playerStates.Hidden)
         {
                 hideBool = true;
+                if(lightToDestroy != null) 
+                {
+                    lightToDestroy.enabled = false;
+                }
         }
         }
 		
@@ -77,6 +82,7 @@ public class PlayerHide : MonoBehaviour
     public void hidePhoton(PhotonMessageInfo info)
     {
         player.plState = playerStates.Hidden;
+        StartCoroutine(exitCountDown());
     }
     [PunRPC]
     public void getOutPhoton(PhotonMessageInfo info)
@@ -113,7 +119,10 @@ public class PlayerHide : MonoBehaviour
                 if (!collider.GetComponent<Closet>().players.Contains(gameObject))
                 {
                     hide(collider.transform, cl);
-
+				    if (player.pv.IsMine)   
+                    { 
+                        lightToDestroy = collider.GetComponent<Closet>().light;    
+                    }
                 }
                 else if (!find)
                 {
@@ -121,5 +130,13 @@ public class PlayerHide : MonoBehaviour
                 }
             }
         
+    }
+    IEnumerator exitCountDown() 
+    {
+        yield return new WaitForSeconds(5f);
+		if (player.plState == playerStates.Hidden) 
+        {
+            exitBool = true;
+        }
     }
 }

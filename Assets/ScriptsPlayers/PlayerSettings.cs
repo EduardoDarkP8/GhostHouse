@@ -83,7 +83,7 @@ public class PlayerSettings : MonoBehaviour
         }
         if (pv.IsMine)
         {
-            playerBody.GetComponent<MeshRenderer>().enabled = true;
+            playerBody.transform.Find("Mesh").gameObject.SetActive(true);
             foreach (Light l in lights)
             {
                 l.enabled = true;
@@ -101,6 +101,7 @@ public class PlayerSettings : MonoBehaviour
             if (pv.IsMine)
             {
                 PhotonNetwork.LeaveRoom();
+                ChangeScene.changeScene("Start");
             }
             PhotonNetwork.Destroy(pv);
 			
@@ -140,15 +141,15 @@ public class PlayerSettings : MonoBehaviour
                         gameOver = true;
                     }
             }
-                if (plState == playerStates.Loser)
-                {
-                    isStuning = true;
+            else if (plState == playerStates.Loser)
+            {
+            isStuning = true;
                     if (life <= 0)
                     {
                         targetPl.gameOver = true;
                         StartCoroutine(TurnDestroyOne(0.5f));
                     }
-                }
+            }
 
             }
             if (tag == "Ghost")
@@ -185,7 +186,7 @@ public class PlayerSettings : MonoBehaviour
 		if (plState == playerStates.Hidden) 
         {
             playerBody.GetComponent<Collider>().isTrigger = true;
-            playerBody.GetComponent<MeshRenderer>().enabled = false;
+            playerBody.transform.Find("Mesh").gameObject.SetActive(false);
             foreach (Light lt in lights)
             {
                 lt.enabled = false;
@@ -194,7 +195,7 @@ public class PlayerSettings : MonoBehaviour
         if (exit) 
         {
             playerBody.GetComponent<Collider>().isTrigger = false;
-            playerBody.GetComponent<MeshRenderer>().enabled = true;
+            playerBody.transform.Find("Mesh").gameObject.SetActive(true);
             foreach (Light lt in lights)
             {
                 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TipeOfView : MonoBehaviour
 {
     public ViewCharacter viewCharacter;
-    public MeshRenderer meshRenderer;
+    public GameObject meshRenderer;
     public bool spotLook;
     public float timer, change = 1.5f;
     void Start()
@@ -14,7 +14,7 @@ public class TipeOfView : MonoBehaviour
         {
             viewCharacter = transform.Find("ViewMesh").GetComponent<ViewCharacter>();
         }
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = transform.Find("Mesh").gameObject;
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class TipeOfView : MonoBehaviour
             }
             if (!spotLook)
             {
-                meshRenderer.enabled = false;
+                meshRenderer.SetActive(false);
                 foreach (Light l in viewCharacter.pl.lights)
                 {
                     l.enabled = false;
@@ -36,7 +36,7 @@ public class TipeOfView : MonoBehaviour
             }
             else if (spotLook) 
             {
-                meshRenderer.enabled = true;
+                meshRenderer.SetActive(true);
                 foreach (Light l in viewCharacter.pl.lights)
                 {
                     l.enabled = true;

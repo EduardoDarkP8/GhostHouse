@@ -75,6 +75,7 @@ public class Network : MonoBehaviourPunCallbacks
         print(otherPlayer.NickName + " Saiu");
 
         print(PhotonNetwork.PlayerList.Length);
+		
     }
 	public override void OnLeftRoom()
 	{

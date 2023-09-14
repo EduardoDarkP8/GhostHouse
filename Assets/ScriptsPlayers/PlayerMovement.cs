@@ -31,11 +31,13 @@ public class PlayerMovement : MonoBehaviour
             
             if (player.plState == playerStates.Stand || player.plState == playerStates.Walk)
             {
-                x = joystick.Horizontal;
-                z = joystick.Vertical;
+                    //x = joystick.Horizontal;
+                    //z = joystick.Vertical;
+                    x = Input.GetAxisRaw("Horizontal");
+                    z = Input.GetAxisRaw("Vertical");
                 x = Mathf.Clamp(x, -1, 1);
                 z = Mathf.Clamp(z, -1, 1);
-                if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
+                if (x == 0 && z == 0)
                 {
                     player.plState = playerStates.Stand;
                 }

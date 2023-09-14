@@ -110,6 +110,10 @@ public class TriviaMain : MonoBehaviour
             pl.targetPl.plState = playerStates.Loser;
             pl.change = true;
             pl.targetPl.change = true;
+			if (pl.gameObject.tag == "Ghost" && pl.plState == playerStates.Winner) 
+            {
+                pl.targetPl.life = 0;
+            }
         }
     }
 }
