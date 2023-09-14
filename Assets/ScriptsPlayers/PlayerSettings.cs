@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using UnityEngine.SceneManagement;
 public enum playerStates
 {
     Stand,
@@ -43,13 +43,14 @@ public class PlayerSettings : MonoBehaviour
     public PlayerSettings targetPl;
     public bool canFight;
     public bool change;
+    public bool gameOver;
     private void Awake()
-
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
         tag = GameSettings.tags[tagIndex];
         playerBody.tag = tag;
+        
         canvas = GameObject.Find("CanvasLocal").GetComponent<Transform>();
         if (tag == GameSettings.tags[0])
         {
@@ -95,8 +96,17 @@ public class PlayerSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (gameOver) 
+        {
+            if (pv.IsMine)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+            PhotonNetwork.Destroy(pv);
+			
+        }
 		if (change) 
-        { 
+        {
 		if (plState == playerStates.Fight) 
         {
             pv.RPC("Fight", RpcTarget.All);
@@ -127,7 +137,7 @@ public class PlayerSettings : MonoBehaviour
                 isStuning = true;
 					if (life <= 0) 
                     {
-                        PhotonNetwork.Destroy(pv);
+                        gameOver = true;
                     }
             }
                 if (plState == playerStates.Loser)
@@ -135,16 +145,19 @@ public class PlayerSettings : MonoBehaviour
                     isStuning = true;
                     if (life <= 0)
                     {
-                        PhotonNetwork.Destroy(pv);
+                        targetPl.gameOver = true;
+                        StartCoroutine(TurnDestroyOne(0.5f));
                     }
                 }
 
             }
             if (tag == "Ghost")
             {
-				if (targetPl.plState == playerStates.Loser && plState == playerStates.Winner) 
+				if (targetPl.plState == playerStates.Loser || plState == playerStates.Winner) 
                 {
-                    PhotonNetwork.Destroy(pv);
+                    targetPl.gameOver = true;
+
+                    StartCoroutine(TurnDestroyOne(0.5f));
                 }
 				else 
                 {
@@ -243,9 +256,13 @@ public class PlayerSettings : MonoBehaviour
             plState = playerStates.Stand;
         }
     IEnumerator CanFight(float t) 
-         {
-            yield return new WaitForSeconds(t);
-            canFight = true;
-         }
-
+    {
+        yield return new WaitForSeconds(t);
+        canFight = true;
+    }
+    IEnumerator TurnDestroyOne(float t) 
+    {
+        yield return new WaitForSeconds(t);
+        gameOver = true;
+    }
 }   

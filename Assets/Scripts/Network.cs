@@ -39,7 +39,7 @@ public class Network : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         print("Entrou no Lobby");
-        PhotonNetwork.JoinRoom("GameLoot");
+        PhotonNetwork.JoinRoom("Game");
         print("Entrando na sala");
     }
 	public override void OnJoinRoomFailed(short returnCode, string message)
@@ -48,7 +48,7 @@ public class Network : MonoBehaviourPunCallbacks
         if (returnCode == ErrorCode.GameDoesNotExist) 
         {
             RoomOptions room = new RoomOptions { MaxPlayers = 10 };
-            PhotonNetwork.CreateRoom("GameLoot", room,null);
+            PhotonNetwork.CreateRoom("Game", room,null);
             print("Criando sala");
         }
     }

@@ -180,6 +180,7 @@ MonoBehaviour:
   targetPl: {fileID: 0}
   canFight: 0
   change: 0
+  gameOver: 0
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0

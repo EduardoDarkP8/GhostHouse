@@ -25,10 +25,17 @@ public class TriviaMain : MonoBehaviour
     {
         time -= Time.deltaTime;
         timer.text = ((int)time).ToString();
+        if (pl.gameObject.tag == "Survival" && pl.life <= 0)
+        {
+            pl.plState = playerStates.Loser;
+            Destroy(gameObject);
+            pl.change = true;
+        }
         if (time < 0 || pl.plState != playerStates.Fight) 
         {
             pl.plState = playerStates.Loser;
             Destroy(gameObject);
+            pl.change = true;
         }
     }
     public void SetButtonsLetter() 
@@ -100,6 +107,9 @@ public class TriviaMain : MonoBehaviour
         {
             Destroy(gameObject);
             pl.plState = playerStates.Winner;
+            pl.targetPl.plState = playerStates.Loser;
+            pl.change = true;
+            pl.targetPl.change = true;
         }
     }
 }
