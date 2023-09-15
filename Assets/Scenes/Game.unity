@@ -433,6 +433,7 @@ MonoBehaviour:
   player: {fileID: 0}
   trivia: {fileID: 0}
   triviaInstante: {fileID: 0}
+  colliderTipe: {fileID: 0}
 --- !u!1 &453082876
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,13 +44,16 @@ public class PlayerSettings : MonoBehaviour
     public bool canFight;
     public bool change;
     public bool gameOver;
+    public float canFightTime, canFightTimer = 3f;
+    public TriviaManager triviaManager;
+    public bool isFighting;
     private void Awake()
     {
         plState = playerStates.Stand;
         rg = GetComponent<Rigidbody>();
         tag = GameSettings.tags[tagIndex];
         playerBody.tag = tag;
-        
+        canFight = true;
         canvas = GameObject.Find("CanvasLocal").GetComponent<Transform>();
         if (tag == GameSettings.tags[0])
         {
@@ -122,11 +125,26 @@ public class PlayerSettings : MonoBehaviour
         }
             change = false;
         }
-        if (plState != playerStates.Loser || plState != playerStates.Winner || plState != playerStates.Fight) 
+        
+        if (plState == playerStates.Loser || plState == playerStates.Winner || plState == playerStates.Fight)
+        {
+            isFighting = true;
+            canFight = false;
+        }
+        else 
+        {
+            isFighting = false;
+        }
+        if (!isFighting) 
         {
 			if (!canFight) 
             {
-                StartCoroutine(CanFight(2f));
+                canFightTime += Time.deltaTime;
+				if (canFightTime >= canFightTimer) 
+                {
+                    canFight = true;
+                    canFightTime = 0;
+                }
             }
         }
         if (plState == playerStates.Loser || plState == playerStates.Winner)
@@ -256,11 +274,6 @@ public class PlayerSettings : MonoBehaviour
         {
             plState = playerStates.Stand;
         }
-    IEnumerator CanFight(float t) 
-    {
-        yield return new WaitForSeconds(t);
-        canFight = true;
-    }
     IEnumerator TurnDestroyOne(float t) 
     {
         yield return new WaitForSeconds(t);

@@ -8,37 +8,41 @@ public class TriviaManager : MonoBehaviour
 	public PlayerSettings player;
 	public GameObject trivia;
 	public GameObject triviaInstante;
-
+	public Collider colliderTipe;
 	private void OnTriggerEnter(Collider other)
 	{
-		if (player.pv.IsMine)
+		if (player.triviaManager != null && colliderTipe != null && player != null)
 		{
-			if (player.plState != playerStates.Fight || player.plState != playerStates.Loser || player.plState != playerStates.Winner)
+
+			if (player.pv.IsMine)
 			{
-				if (other.gameObject.GetComponent<TipeOfView>())
+				if (player.plState != playerStates.Fight || player.plState != playerStates.Loser || player.plState != playerStates.Winner)
 				{
-					if (other.gameObject.GetComponent<TipeOfView>().viewCharacter.pl != null)
+					if (other.gameObject.GetComponent<TipeOfView>())
 					{
-						PlayerSettings ps = other.gameObject.GetComponent<TipeOfView>().viewCharacter.pl;
-						if (ps.plState != playerStates.Fight || ps.plState != playerStates.Loser || ps.plState != playerStates.Winner)
+						if (other.gameObject.GetComponent<TipeOfView>().viewCharacter.pl != null)
 						{
-							print(ps.plState);
-							if (ps.gameObject.tag == "Survival" && player.gameObject.tag == "Ghost")
-							{
-								Fight(ps);
-							}
-							else if (player.gameObject.tag == "Survival" && ps.gameObject.tag == "Ghost")
-							{
-								Fight(ps);
+							PlayerSettings ps = other.gameObject.GetComponent<TipeOfView>().viewCharacter.pl;
+							if (ps.plState != playerStates.Fight || ps.plState != playerStates.Loser || ps.plState != playerStates.Winner)
+								{
+								print(ps.plState);
+								if (ps.gameObject.tag == "Survival" && player.gameObject.tag == "Ghost")
+								{
+									Fight(ps);
+								}
+								else if (player.gameObject.tag == "Survival" && ps.gameObject.tag == "Ghost")
+								{
+									Fight(ps);
+								}
+								else
+								{
+									ps = null;
+								}
 							}
 							else
 							{
 								ps = null;
 							}
-						}
-						else
-						{
-							ps = null;
 						}
 					}
 				}
@@ -58,8 +62,6 @@ public class TriviaManager : MonoBehaviour
 				triviaInstante.transform.parent = GameObject.Find("Canvas").transform.Find("CanvasLocal");
 				triviaInstante.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 				player.change = true;
-
 			}
-	
 	}
 }
