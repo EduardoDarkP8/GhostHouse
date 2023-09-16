@@ -11,8 +11,6 @@ public class TriviaManager : MonoBehaviour
 	public Collider colliderTipe;
 	private void OnTriggerEnter(Collider other)
 	{
-		if (player.triviaManager != null && colliderTipe != null && player != null)
-		{
 
 			if (player.pv.IsMine)
 			{
@@ -45,7 +43,6 @@ public class TriviaManager : MonoBehaviour
 							}
 						}
 					}
-				}
 			}
 		}
 	}

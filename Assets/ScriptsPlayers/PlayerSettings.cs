@@ -47,6 +47,7 @@ public class PlayerSettings : MonoBehaviour
     public float canFightTime, canFightTimer = 3f;
     public TriviaManager triviaManager;
     public bool isFighting;
+    public Animator anima;
     private void Awake()
     {
         plState = playerStates.Stand;

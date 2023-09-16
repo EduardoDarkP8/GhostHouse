@@ -7,6 +7,7 @@ public class Salt : MonoBehaviour
     public GameObject gm;
     public PhotonView pv;
     public PlayerSalt ps;
+    public MeshRenderer ms;
     void Start()
     {
         
@@ -22,7 +23,7 @@ public class Salt : MonoBehaviour
 		{
             gm = other.gameObject.transform.parent.gameObject;
             GetComponent<Collider>().enabled = false;
-            GetComponent<MeshRenderer>().enabled = false;
+            ms.enabled = false;
             velocityDegree(gm.GetComponent<PlayerSettings>());
 		}
 	}

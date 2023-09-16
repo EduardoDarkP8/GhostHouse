@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
                 player.plState = playerStates.Walk;
             }
             }
-            
+            player.anima.SetFloat("x",Mathf.Abs(x) + Mathf.Abs(z));
         }
         if (player.plState == playerStates.Loser || player.plState == playerStates.Winner)
         {

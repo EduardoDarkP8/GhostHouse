@@ -37,11 +37,13 @@ public class PlayerSalt : MonoBehaviour
 
     IEnumerator placeSalt()
     {
-            player.playerBody.GetComponent<Collider>().enabled = false;
-            player.plState = playerStates.Salt;
-            yield return new WaitForSeconds(0.3f);
-            player.plState = playerStates.Stand;
-            player.playerBody.GetComponent<Collider>().enabled = true;
+        player.playerBody.GetComponent<Collider>().enabled = false;
+        player.plState = playerStates.Salt;
+        player.anima.SetBool("Salt",true);
+        yield return new WaitForSeconds(0.3f);
+        player.plState = playerStates.Stand;
+        player.anima.SetBool("Salt", false);
+        player.playerBody.GetComponent<Collider>().enabled = true;
     }
     public void DestroySalt(GameObject gm) 
     {
