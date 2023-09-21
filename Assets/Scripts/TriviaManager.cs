@@ -11,7 +11,6 @@ public class TriviaManager : MonoBehaviour
 	public Collider colliderTipe;
 	private void OnTriggerEnter(Collider other)
 	{
-
 			if (player.pv.IsMine)
 			{
 				if (player.plState != playerStates.Fight || player.plState != playerStates.Loser || player.plState != playerStates.Winner)
@@ -43,8 +42,8 @@ public class TriviaManager : MonoBehaviour
 							}
 						}
 					}
+				}
 			}
-		}
 	}
 	void Fight(PlayerSettings rival)
 	{

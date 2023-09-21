@@ -10,7 +10,7 @@ public class PlayerSalt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (player.pv.IsMine) 
+		if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"]) 
         {
             if (Input.GetButtonDown("Jump") && time >= targetTime && player.plState != playerStates.Hidden)
             {

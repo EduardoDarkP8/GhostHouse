@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (player.pv.IsMine) 
+		if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"]) 
         {
 			
             if (player.plState != playerStates.Fight || player.plState != playerStates.Loser || player.plState != playerStates.Winner) 

@@ -561,7 +561,7 @@ MonoBehaviour:
   gameOver: 0
   canFightTime: 0
   canFightTimer: 3
-  triviaManager: {fileID: 0}
+  triviaManager: {fileID: 268459303258268585}
   isFighting: 0
   anima: {fileID: 1902792283662702376}
 --- !u!114 &7134258985845032022

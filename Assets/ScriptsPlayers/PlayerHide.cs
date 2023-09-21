@@ -16,7 +16,7 @@ public class PlayerHide : MonoBehaviour
 
     void Update()
     {
-        if (player.pv.IsMine) { 
+        if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"]) { 
         if (Input.GetButtonUp("Interact") && player.plState == playerStates.Hidden)
         {
                 exitBool = true;

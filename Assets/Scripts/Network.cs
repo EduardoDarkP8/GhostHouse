@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class Network : MonoBehaviourPunCallbacks
 {
     public static int[] numbers = new int[10];
+
     private void Awake()
     {
         bool change = true;
@@ -48,6 +50,10 @@ public class Network : MonoBehaviourPunCallbacks
         if (returnCode == ErrorCode.GameDoesNotExist) 
         {
             RoomOptions room = new RoomOptions { MaxPlayers = 10 };
+            Hashtable options = new Hashtable();
+            options.Add("Time", 180);
+            options.Add("StartMatch", false);
+            room.CustomRoomProperties = options;
             PhotonNetwork.CreateRoom("Game", room,null);
             print("Criando sala");
         }

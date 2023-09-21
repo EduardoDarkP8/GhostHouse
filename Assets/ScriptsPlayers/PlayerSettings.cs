@@ -14,7 +14,8 @@ public enum playerStates
     Stunned,
     Fight,
     Winner,
-    Loser
+    Loser,
+    Waiting
 }
 public class PlayerSettings : MonoBehaviour
 {
@@ -165,7 +166,7 @@ public class PlayerSettings : MonoBehaviour
             isStuning = true;
                     if (life <= 0)
                     {
-                        targetPl.gameOver = true;
+                        gameOver = true;
                         StartCoroutine(TurnDestroyOne(0.5f));
                     }
             }

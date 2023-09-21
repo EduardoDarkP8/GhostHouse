@@ -9,7 +9,7 @@ public class PlayerDash : MonoBehaviour
     
     void Update()
     {
-        if (player.pv.IsMine)
+        if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"])
         {
             if (Input.GetButtonDown("Jump") && time >= targetTime && player.plState != playerStates.Stunned)
             {
@@ -24,7 +24,7 @@ public class PlayerDash : MonoBehaviour
     }
 	private void FixedUpdate()
 	{
-        if (player.pv.IsMine) {
+        if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"]) {
             if (player.plState == playerStates.Dash && Input.GetButton("Jump"))
             {
                 player.rg.AddForce(player.playerBody.transform.forward * player.dashForce, ForceMode.Impulse);
