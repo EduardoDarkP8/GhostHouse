@@ -71,6 +71,8 @@ MonoBehaviour:
   - Stand
   - collidersOn
   - collidersOff
+  - destroyBody
+  - canNotFight
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

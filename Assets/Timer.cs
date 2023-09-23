@@ -27,6 +27,11 @@ public class Timer : MonoBehaviour
             time -= Time.deltaTime;
             setTime["Time"] = (int)time;
             PhotonNetwork.CurrentRoom.SetCustomProperties(setTime);
+            if((int)PhotonNetwork.CurrentRoom.CustomProperties["Time"] <= 0)
+			{
+                setTime["StartMatch"] = false;
+                setTime["TimesUp"] = true;
+			}
 
         }
     }

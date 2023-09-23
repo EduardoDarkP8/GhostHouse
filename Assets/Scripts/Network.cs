@@ -8,7 +8,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class Network : MonoBehaviourPunCallbacks
 {
     public static int[] numbers = new int[10];
-
+    public Transform[] spawns = new Transform[10];
     private void Awake()
     {
         bool change = true;
@@ -53,6 +53,7 @@ public class Network : MonoBehaviourPunCallbacks
             Hashtable options = new Hashtable();
             options.Add("Time", 180);
             options.Add("StartMatch", false);
+            options.Add("TimesUp",false);
             room.CustomRoomProperties = options;
             PhotonNetwork.CreateRoom("Game", room,null);
             print("Criando sala");
@@ -69,11 +70,11 @@ public class Network : MonoBehaviourPunCallbacks
         print("Entrou na Sala: " + PhotonNetwork.NickName);
         if (numbers[PhotonNetwork.PlayerList.Length-1] == 1) 
         {
-            PhotonNetwork.Instantiate("PlayerSurvivalObject", transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("PlayerSurvivalObject", spawns[PhotonNetwork.PlayerList.Length - 1].position, Quaternion.identity);
         }
         else if (numbers[PhotonNetwork.PlayerList.Length - 1] == 0)
         {
-            PhotonNetwork.Instantiate("PlayerGhostObject", transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("PlayerGhostObject", spawns[PhotonNetwork.PlayerList.Length - 1].position, Quaternion.identity);
         }
     }
 	public override void OnPlayerLeftRoom(Player otherPlayer)

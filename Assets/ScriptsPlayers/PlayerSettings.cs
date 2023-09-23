@@ -55,6 +55,7 @@ public class PlayerSettings : MonoBehaviour
         rg = GetComponent<Rigidbody>();
         tag = GameSettings.tags[tagIndex];
         playerBody.tag = tag;
+        canFightTime = canFightTimer;
         canFight = true;
         canvas = GameObject.Find("CanvasLocal").GetComponent<Transform>();
         if (tag == GameSettings.tags[0])
@@ -105,12 +106,21 @@ public class PlayerSettings : MonoBehaviour
         {
             if (pv.IsMine)
             {
-                PhotonNetwork.LeaveRoom();
-                ChangeScene.changeScene("Start");
+				if (gameObject.tag == "Survival") 
+                {
+                    
+                }
+                else if (gameObject.tag == "Ghost") 
+                {
+                    
+                }
             }
-            PhotonNetwork.Destroy(pv);
-			
+            pv.RPC("destroyBody",RpcTarget.All);
+
         }
+        else if (!gameOver)
+		{
+
 		if (change) 
         {
 		if (plState == playerStates.Fight) 
@@ -242,7 +252,7 @@ public class PlayerSettings : MonoBehaviour
             }
             
         }
-        else if (!isStuning && lights[0].color != colors[0])
+        if (!isStuning && lights[0].color != colors[0])
         {
             foreach (Light lt in lights)
             {
@@ -250,6 +260,7 @@ public class PlayerSettings : MonoBehaviour
             }
         }
         
+		}
     }
         [PunRPC]
         public void Stun(PhotonMessageInfo info)
@@ -281,4 +292,24 @@ public class PlayerSettings : MonoBehaviour
         yield return new WaitForSeconds(t);
         gameOver = true;
     }
+	[PunRPC]
+	public void destroyBody()
+	{
+		if (playerBody != null) 
+        {
+            lights = new List<Light>();
+            Destroy(GetComponent<PlayerMovement>());
+            Destroy(playerBody);
+		    if (GetComponent<PlayerHide>() != null)
+		    {
+            Destroy(GetComponent<PlayerHide>());
+            Destroy(GetComponent<PlayerSalt>());
+            }
+            if (GetComponent<PlayerDash>() != null)
+            {
+                Destroy(GetComponent<PlayerDash>());
+            }
+
+        }
+	}
 }   

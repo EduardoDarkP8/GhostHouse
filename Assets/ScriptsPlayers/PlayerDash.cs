@@ -15,6 +15,7 @@ public class PlayerDash : MonoBehaviour
             {
                 time = 0;
                 StartCoroutine(Dash());
+                player.pv.RPC("canNotFight",RpcTarget.All);
             }
             else if (time <= targetTime)
             {
@@ -34,17 +35,29 @@ public class PlayerDash : MonoBehaviour
                 player.plState = playerStates.Stand;
                 player.playerBody.GetComponent<Collider>().enabled = true;
             }
+            else if (player.plState == playerStates.Fight) 
+            {
+                player.playerBody.GetComponent<Collider>().enabled = true;
+            }
         }
 	}
     IEnumerator Dash() 
     {
         player.playerBody.GetComponent<Collider>().enabled = false;
+        player.triviaManager.colliderTipe.GetComponent<Collider>().enabled = false;
         player.plState = playerStates.Dash;
         yield return new WaitForSeconds(0.5f);
 		if (player.plState == playerStates.Dash && Input.GetButton("Jump")) 
         {
             player.plState = playerStates.Stand;
             player.playerBody.GetComponent<Collider>().enabled = true;
+            
         }
+    }
+    [PunRPC]
+    public void canNotFight() 
+    {
+        player.canFightTime = 0f;
+        player.canFight = false;
     }
 }
