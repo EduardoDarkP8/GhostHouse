@@ -12,7 +12,7 @@ public class PlayerSalt : MonoBehaviour
     {
 		if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"]) 
         {
-            if (Input.GetButtonDown("Jump") && time >= targetTime && player.plState != playerStates.Hidden)
+            if (player.buttons[1].click && time >= targetTime && player.plState != playerStates.Hidden)
             {
                 time = 0;
                 player.pv.RPC("NetworkSalt", RpcTarget.All);

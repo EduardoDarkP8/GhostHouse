@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerSettings player;
     public float x, z;
     Quaternion target;
-    //public bl_Joystick joystick;
+    public bl_Joystick joystick;
     public GameObject joystickInstance;
     public float timer, targetTime=0.25f;
 
@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 		if (player.pv.IsMine) 
         {
             joystickInstance = GameObject.Find("Joystick");
-            //joystick = joystickInstance.GetComponent<bl_Joystick>();
+            joystick = joystickInstance.GetComponent<bl_Joystick>();
         }
         
     }
@@ -34,12 +34,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 
                     
-                    //x = joystick.Horizontal;
-                //z = joystick.Vertical;
-                x = Input.GetAxisRaw("Horizontal");
-                z = Input.GetAxisRaw("Vertical");
-                x = Mathf.Clamp(x, -1, 1);
-                z = Mathf.Clamp(z, -1, 1);
+                x = joystick.Horizontal;
+                z = joystick.Vertical;
+                //x = Input.GetAxisRaw("Horizontal");
+                //z = Input.GetAxisRaw("Vertical");
                 if (x == 0 && z == 0)
                 {
                     player.plState = playerStates.Stand;

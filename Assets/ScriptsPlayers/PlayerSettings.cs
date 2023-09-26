@@ -49,6 +49,10 @@ public class PlayerSettings : MonoBehaviour
     public TriviaManager triviaManager;
     public bool isFighting;
     public Animator anima;
+    public GameObject dashButton;
+    public GameObject saltButton;
+    public GameObject hideButton;
+    public DoorButton[] buttons; 
     private void Awake()
     {
         plState = playerStates.Stand;
@@ -63,6 +67,9 @@ public class PlayerSettings : MonoBehaviour
             speed = 5.5f;
             gameObject.AddComponent<PlayerDash>();
             gameObject.GetComponent<PlayerDash>().player = this;
+            buttons = new DoorButton[1];
+            GameObject btn = Instantiate(dashButton, canvas.transform);
+            buttons[0] = btn.GetComponent<DoorButton>();
             GameObject gm = Instantiate(viewGhost, playerBody.transform.position, Quaternion.identity) as GameObject;
             gm.transform.SetParent(playerBody.transform);
             lights.Add(gm.GetComponent<Light>());
@@ -75,6 +82,11 @@ public class PlayerSettings : MonoBehaviour
         {
             speed = 6.5f;
             bonuSpeed = speed;
+            buttons = new DoorButton[2];
+            GameObject btn = Instantiate(hideButton, canvas.transform);
+            buttons[0] = btn.GetComponent<DoorButton>();
+            btn = Instantiate(saltButton, canvas.transform);
+            buttons[1] = btn.GetComponent<DoorButton>();
             gameObject.AddComponent<PlayerSalt>();
             gameObject.GetComponent<PlayerSalt>().player = this;
             gameObject.GetComponent<PlayerSalt>().saltPoint = saltPoint;

@@ -564,6 +564,10 @@ MonoBehaviour:
   triviaManager: {fileID: 268459303258268585}
   isFighting: 0
   anima: {fileID: 1902792283662702376}
+  dashButton: {fileID: 746898819580599395, guid: 1bc13027da85fb44db3518ffe3593ed7, type: 3}
+  saltButton: {fileID: 1413158854080591644, guid: d50637c6fba992a4190ce32c76df9326, type: 3}
+  hideButton: {fileID: 8730438964176245867, guid: 2a234e49498645c46bf77051a6761142, type: 3}
+  buttons: []
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,6 +583,7 @@ MonoBehaviour:
   player: {fileID: 7739163173834089586}
   x: 0
   z: 0
+  joystick: {fileID: 0}
   joystickInstance: {fileID: 0}
   timer: 0
   targetTime: 0.25

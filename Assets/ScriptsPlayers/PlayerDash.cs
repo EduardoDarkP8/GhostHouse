@@ -11,7 +11,7 @@ public class PlayerDash : MonoBehaviour
     {
         if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"])
         {
-            if (Input.GetButtonDown("Jump") && time >= targetTime && player.plState != playerStates.Stunned)
+            if (player.buttons[0].click && time >= targetTime && player.plState != playerStates.Stunned)
             {
                 time = 0;
                 StartCoroutine(Dash());
@@ -26,11 +26,11 @@ public class PlayerDash : MonoBehaviour
 	private void FixedUpdate()
 	{
         if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"]) {
-            if (player.plState == playerStates.Dash && Input.GetButton("Jump"))
+            if (player.plState == playerStates.Dash && player.buttons[0].click)
             {
                 player.rg.AddForce(player.playerBody.transform.forward * player.dashForce, ForceMode.Impulse);
             }
-            else if (player.plState == playerStates.Dash && !Input.GetButton("Jump"))
+            else if (player.plState == playerStates.Dash && !player.buttons[0].click)
             {
                 player.plState = playerStates.Stand;
                 player.playerBody.GetComponent<Collider>().enabled = true;
@@ -47,7 +47,7 @@ public class PlayerDash : MonoBehaviour
         player.triviaManager.colliderTipe.GetComponent<Collider>().enabled = false;
         player.plState = playerStates.Dash;
         yield return new WaitForSeconds(0.5f);
-		if (player.plState == playerStates.Dash && Input.GetButton("Jump")) 
+		if (player.plState == playerStates.Dash && player.buttons[0].click) 
         {
             player.plState = playerStates.Stand;
             player.playerBody.GetComponent<Collider>().enabled = true;
