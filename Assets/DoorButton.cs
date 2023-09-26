@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DoorButton : MonoBehaviour
 {
     public bool click;
+    public bool drop;
     public void Click() 
     {
         click = true;
@@ -13,5 +14,9 @@ public class DoorButton : MonoBehaviour
     public void exitClick() 
     {
         click = false;
+    }
+    public void drop() 
+    {
+        
     }
 }
