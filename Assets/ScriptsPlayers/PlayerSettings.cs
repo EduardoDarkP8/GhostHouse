@@ -167,6 +167,7 @@ public class PlayerSettings : MonoBehaviour
 		if (plState == playerStates.Fight) 
         {
             pv.RPC("Fight", RpcTarget.All);
+           
         }
         else if (plState == playerStates.Loser) 
         {
