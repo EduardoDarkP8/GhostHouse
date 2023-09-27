@@ -22,7 +22,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Vector3 DeathArea;
     private Vector3 currentVelocity;
     private bool isFree = false;
-    private int lastId = -2;
+    public int lastId = -2;
     private Image stickImage;
     private Image backImage;
     private Canvas m_Canvas;

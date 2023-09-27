@@ -6,7 +6,7 @@ using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class Timer : MonoBehaviour
 {
-    public float time = 120;
+    public float time = 20;
     public PhotonView pv;
     public Text txt;
     ExitGames.Client.Photon.Hashtable setTime = new ExitGames.Client.Photon.Hashtable();

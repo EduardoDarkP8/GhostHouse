@@ -8,6 +8,11 @@ TagManager:
   - Survival
   - Closet
   - Body
+  - Trivia
+  - Win
+  - Lose
+  - Canvas
+  - Wall
   layers:
   - Default
   - TransparentFX

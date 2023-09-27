@@ -43,6 +43,10 @@ public class TriviaManager : MonoBehaviour
 						}
 					}
 				}
+				if (player.tag == "Ghost" && other.gameObject.tag == "Wall") 
+				{
+				player.inLimit = true; 
+				}
 			}
 	}
 	void Fight(PlayerSettings rival)

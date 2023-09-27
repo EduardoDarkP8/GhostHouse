@@ -6,17 +6,18 @@ using UnityEngine.UI;
 public class DoorButton : MonoBehaviour
 {
     public bool click;
-    public bool drop;
+    public bool drag;
     public void Click() 
     {
-        click = true;
+		if (!drag) 
+        {
+            click = true;
+        }
+        drag = true;
     }
     public void exitClick() 
     {
         click = false;
-    }
-    public void drop() 
-    {
-        
+        drag = false;
     }
 }

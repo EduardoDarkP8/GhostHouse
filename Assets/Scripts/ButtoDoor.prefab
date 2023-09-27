@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   click: 0
+  drag: 0
 --- !u!114 &924986393198406369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5393440589241851647}
           m_TargetAssemblyTypeName: DoorButton, Assembly-CSharp
-          m_MethodName: exitClick
+          m_MethodName: Click
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -165,6 +166,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
         - m_Target: {fileID: 5393440589241851647}
           m_TargetAssemblyTypeName: DoorButton, Assembly-CSharp
           m_MethodName: exitClick

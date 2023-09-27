@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
                 z = joystick.Vertical;
                 //x = Input.GetAxisRaw("Horizontal");
                 //z = Input.GetAxisRaw("Vertical");
-                if (x == 0 && z == 0)
+                if (joystick.lastId != -1)
                 {
                     player.plState = playerStates.Stand;
                 }
@@ -48,11 +48,11 @@ public class PlayerMovement : MonoBehaviour
                 x = 0;
                 z = 0;
             }
-            if (x != 0 || z != 0)
+            if (joystick.lastId != -2)
             {
                 
                 target = Quaternion.Euler(0, Mathf.Atan2(x, z) * Mathf.Rad2Deg, 0);
-                player.plState = playerStates.Walk;
+                //player.plState = playerStates.Walk;
             }
             }
             player.anima.SetFloat("x",Mathf.Abs(x) + Mathf.Abs(z));

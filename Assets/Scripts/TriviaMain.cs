@@ -33,7 +33,14 @@ public class TriviaMain : MonoBehaviour
         }
         if (time < 0 || pl.plState != playerStates.Fight) 
         {
-            pl.plState = playerStates.Loser;
+			if (pl.gameObject.tag == "Ghost")
+            {
+                pl.plState = playerStates.Loser;
+            }
+            else if (pl.gameObject.tag == "Survival")
+            {
+                pl.plState = playerStates.Winner;
+            }
             Destroy(gameObject);
             pl.change = true;
         }

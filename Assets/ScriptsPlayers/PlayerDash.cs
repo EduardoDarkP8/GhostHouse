@@ -39,6 +39,12 @@ public class PlayerDash : MonoBehaviour
             {
                 player.playerBody.GetComponent<Collider>().enabled = true;
             }
+            if (player.inLimit)
+            {
+                player.plState = playerStates.Stand;
+                player.playerBody.GetComponent<Collider>().enabled = true;
+                player.inLimit = false;
+            }
         }
 	}
     IEnumerator Dash() 

@@ -17,13 +17,14 @@ public class PlayerHide : MonoBehaviour
     void Update()
     {
         if (player.pv.IsMine && (bool)PhotonNetwork.CurrentRoom.CustomProperties["StartMatch"]) { 
-        if (Input.GetButtonUp("Interact") && player.plState == playerStates.Hidden)
+        if (player.buttons[0].click && player.plState == playerStates.Hidden)
         {
                 exitBool = true;
-                
+                player.buttons[0].click = false;
         }
-        else if (Input.GetButtonUp("Interact") && player.plState != playerStates.Hidden)
+        else if (player.buttons[0].click && player.plState != playerStates.Hidden)
         {
+                player.buttons[0].click = false;
                 hideBool = true;
                 if(lightToDestroy != null) 
                 {
@@ -87,6 +88,7 @@ public class PlayerHide : MonoBehaviour
     public void getOutPhoton(PhotonMessageInfo info)
     { 
         player.plState = playerStates.Stand;
+
         find = false;
         player.exit = true;
     }

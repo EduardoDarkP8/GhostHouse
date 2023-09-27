@@ -568,6 +568,7 @@ MonoBehaviour:
   saltButton: {fileID: 1413158854080591644, guid: d50637c6fba992a4190ce32c76df9326, type: 3}
   hideButton: {fileID: 8730438964176245867, guid: 2a234e49498645c46bf77051a6761142, type: 3}
   buttons: []
+  inLimit: 0
 --- !u!114 &7134258985845032022
 MonoBehaviour:
   m_ObjectHideFlags: 0

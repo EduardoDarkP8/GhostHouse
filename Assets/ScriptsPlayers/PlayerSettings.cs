@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+
 public enum playerStates
 {
     Stand,
@@ -52,7 +53,8 @@ public class PlayerSettings : MonoBehaviour
     public GameObject dashButton;
     public GameObject saltButton;
     public GameObject hideButton;
-    public DoorButton[] buttons; 
+    public DoorButton[] buttons;
+    public bool inLimit;
     private void Awake()
     {
         plState = playerStates.Stand;
@@ -67,9 +69,13 @@ public class PlayerSettings : MonoBehaviour
             speed = 5.5f;
             gameObject.AddComponent<PlayerDash>();
             gameObject.GetComponent<PlayerDash>().player = this;
-            buttons = new DoorButton[1];
-            GameObject btn = Instantiate(dashButton, canvas.transform);
-            buttons[0] = btn.GetComponent<DoorButton>();
+            
+			if (pv.IsMine)
+			{
+                buttons = new DoorButton[1];
+                GameObject btn = Instantiate(dashButton, canvas.transform);
+                buttons[0] = btn.GetComponent<DoorButton>();
+			}
             GameObject gm = Instantiate(viewGhost, playerBody.transform.position, Quaternion.identity) as GameObject;
             gm.transform.SetParent(playerBody.transform);
             lights.Add(gm.GetComponent<Light>());
@@ -82,11 +88,14 @@ public class PlayerSettings : MonoBehaviour
         {
             speed = 6.5f;
             bonuSpeed = speed;
-            buttons = new DoorButton[2];
-            GameObject btn = Instantiate(hideButton, canvas.transform);
-            buttons[0] = btn.GetComponent<DoorButton>();
-            btn = Instantiate(saltButton, canvas.transform);
-            buttons[1] = btn.GetComponent<DoorButton>();
+            if (pv.IsMine)
+            {
+                buttons = new DoorButton[2];
+                GameObject btn = Instantiate(hideButton, canvas.transform);
+                buttons[0] = btn.GetComponent<DoorButton>();
+                btn = Instantiate(saltButton, canvas.transform);
+                buttons[1] = btn.GetComponent<DoorButton>();
+            }
             gameObject.AddComponent<PlayerSalt>();
             gameObject.GetComponent<PlayerSalt>().player = this;
             gameObject.GetComponent<PlayerSalt>().saltPoint = saltPoint;
@@ -114,20 +123,40 @@ public class PlayerSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (gameOver) 
+        
+        if ((bool)PhotonNetwork.CurrentRoom.CustomProperties["TimesUp"])
+        {
+            gameOver = true;
+        }
+        if (gameOver) 
         {
             if (pv.IsMine)
             {
 				if (gameObject.tag == "Survival") 
                 {
-                    
+					if (!(bool)PhotonNetwork.CurrentRoom.CustomProperties["TimesUp"])
+                    {
+                        GameObject.FindGameObjectWithTag("Canvas").transform.Find("Lose").gameObject.SetActive(true);
+                    }
+                    else if ((bool)PhotonNetwork.CurrentRoom.CustomProperties["TimesUp"])
+                    {
+                        GameObject.FindGameObjectWithTag("Canvas").transform.Find("Win").gameObject.SetActive(true);
+                    }
                 }
                 else if (gameObject.tag == "Ghost") 
                 {
-                    
+                    if ((bool)PhotonNetwork.CurrentRoom.CustomProperties["TimesUp"])
+                    {
+                        GameObject.FindGameObjectWithTag("Canvas").transform.Find("Lose").gameObject.SetActive(true);
+                    }
+                    else if (!(bool)PhotonNetwork.CurrentRoom.CustomProperties["TimesUp"])
+                    {
+                        GameObject.FindGameObjectWithTag("Canvas").transform.Find("Win").gameObject.SetActive(true);
+                    }
                 }
+                Destroy(GameObject.FindGameObjectWithTag("Trivia"));
+                pv.RPC("destroyBody", RpcTarget.All);
             }
-            pv.RPC("destroyBody",RpcTarget.All);
 
         }
         else if (!gameOver)
@@ -288,6 +317,10 @@ public class PlayerSettings : MonoBehaviour
         public void Lose(PhotonMessageInfo info)
         {
             plState = playerStates.Loser;
+            if (gameObject.tag == "Survival") 
+            {
+                gameOver = true;
+            }
         }
         [PunRPC]
         public void Fight(PhotonMessageInfo info)
