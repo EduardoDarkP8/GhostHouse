@@ -28,8 +28,8 @@ public class TriviaMain : MonoBehaviour
         if (pl.gameObject.tag == "Survival" && pl.life <= 0)
         {
             pl.plState = playerStates.Loser;
-            Destroy(gameObject);
             pl.change = true;
+            Destroy(gameObject);
         }
         if (time < 0 || pl.plState != playerStates.Fight) 
         {
@@ -41,8 +41,8 @@ public class TriviaMain : MonoBehaviour
             {
                 pl.plState = playerStates.Winner;
             }
-            Destroy(gameObject);
             pl.change = true;
+            Destroy(gameObject);
         }
     }
     public void SetButtonsLetter() 

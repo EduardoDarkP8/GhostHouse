@@ -10,7 +10,7 @@ public class Salt : MonoBehaviour
     public MeshRenderer ms;
     void Start()
     {
-        
+        StartCoroutine(destroy());
     }
 
     void Update()
@@ -32,6 +32,11 @@ public class Salt : MonoBehaviour
         player.pv.RPC("Stun",RpcTarget.All);
         ps.DestroySalt(gameObject);
         
+    }
+    IEnumerator destroy() 
+    {
+        yield return new WaitForSeconds(5f);
+        PhotonNetwork.Destroy(pv);
     }
 
 }
