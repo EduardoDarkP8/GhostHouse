@@ -27,7 +27,7 @@ public class TriviaManager : MonoBehaviour
 								{
 									Fight(ps);
 								}
-								else if (player.gameObject.tag == "Survival" && ps.gameObject.tag == "Ghost")
+								if (player.gameObject.tag == "Survival" && ps.gameObject.tag == "Ghost")
 								{
 									Fight(ps);
 								}
@@ -62,6 +62,10 @@ public class TriviaManager : MonoBehaviour
 				triviaInstante.transform.parent = GameObject.Find("Canvas").transform.Find("CanvasLocal");
 				triviaInstante.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 				player.change = true;
+				if (player.gameObject.tag == "Ghost"  && rival.gameOver) 
+				{
+					player.plState = playerStates.Winner;
+				}
 			}
 	}
 }

@@ -10,6 +10,7 @@ public class Salt : MonoBehaviour
     public MeshRenderer ms;
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         StartCoroutine(destroy());
     }
 
@@ -36,7 +37,9 @@ public class Salt : MonoBehaviour
     IEnumerator destroy() 
     {
         yield return new WaitForSeconds(5f);
+        print("AAA");
         PhotonNetwork.Destroy(pv);
+
     }
 
 }

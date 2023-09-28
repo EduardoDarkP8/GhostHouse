@@ -34,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
                 if (player.plState == playerStates.Stand || player.plState == playerStates.Walk)
                 {
 
-                    HudActive(true);
                     x = joystick.Horizontal;
                     z = joystick.Vertical;
                     //x = Input.GetAxisRaw("Horizontal");
@@ -68,20 +67,8 @@ public class PlayerMovement : MonoBehaviour
                 player.life--;
             }
         }
-        else if (player.plState == playerStates.Fight) 
-        {
-            HudActive(false);
-        }
     }
-    void HudActive(bool active) 
-    {
-        joystick.gameObject.GetComponent<Image>().enabled = active;
-        joystick.gameObject.transform.Find("Stick").GetComponent<Image>().enabled = active;
-        foreach (DoorButton d in player.buttons)
-        {
-            d.gameObject.GetComponent<Image>().enabled = active;
-        }
-    }
+
     private void FixedUpdate()
     {
         if (player.pv.IsMine)

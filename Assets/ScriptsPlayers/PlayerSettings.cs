@@ -201,43 +201,29 @@ public class PlayerSettings : MonoBehaviour
                 }
             }
         }
-        if (plState == playerStates.Loser || plState == playerStates.Winner)
-        {
-			if (tag == "Survival") 
-            { 
-            if(plState == playerStates.Winner)
-			{
-                isStuning = true;
-					if (life <= 0) 
-                    {
-                        gameOver = true;
-                    }
-            }
-            else if (plState == playerStates.Loser)
+            if (plState == playerStates.Loser || plState == playerStates.Winner)
             {
-            isStuning = true;
-                    if (life <= 0)
-                    {
-                        gameOver = true;
-                        StartCoroutine(TurnDestroyOne(0.5f));
-                    }
-            }
-
-            }
-            if (tag == "Ghost")
-            {
-				if (targetPl.plState == playerStates.Loser || plState == playerStates.Winner) 
+                if (tag == "Survival")
                 {
-                    targetPl.gameOver = true;
-
-                    StartCoroutine(TurnDestroyOne(0.5f));
+                    if (plState == playerStates.Winner)
+                    {
+                        isStuning = true;
+                        if (life <= 0)
+                        {
+                            gameOver = true;
+                            targetPl.gameOver = true;
+                            StartCoroutine(TurnDestroyOne(0.5f));
+                            StartCoroutine(targetPl.TurnDestroyOne(0.5f));
+                        }
+                        plState = playerStates.Stand;
+                        targetPl.pv.RPC("Stun", RpcTarget.All);
+                    }
                 }
-				else 
+                if (tag == "Ghost" && targetPl.life <= 0)
                 {
-                    pv.RPC("Stun", RpcTarget.All);
+                    gameOver = true;
                 }
             }
-        }
         if (!pv.IsMine)
         {
             cm.enabled = false;
@@ -294,6 +280,7 @@ public class PlayerSettings : MonoBehaviour
             }
             
         }
+
         if (!isStuning && lights[0].color != colors[0])
         {
             foreach (Light lt in lights)
@@ -318,6 +305,7 @@ public class PlayerSettings : MonoBehaviour
         public void Lose(PhotonMessageInfo info)
         {
             plState = playerStates.Loser;
+            targetPl.plState = playerStates.Winner;
             if (gameObject.tag == "Survival") 
             {
                 gameOver = true;
@@ -327,6 +315,15 @@ public class PlayerSettings : MonoBehaviour
         public void Fight(PhotonMessageInfo info)
         {
             plState = playerStates.Fight;
+            StartCoroutine(SurvivalDelay());
+        }
+        IEnumerator SurvivalDelay() 
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (gameObject.tag == "Survival")
+            {
+                life--;
+            }
         }
         [PunRPC]
         public void Stand(PhotonMessageInfo info)

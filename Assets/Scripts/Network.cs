@@ -76,6 +76,7 @@ public class Network : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Instantiate("PlayerGhostObject", spawns[PhotonNetwork.PlayerList.Length - 1].position, Quaternion.identity);
         }
+        Destroy(GameObject.Find("Canvas").transform.Find("Loading").gameObject);
     }
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{
