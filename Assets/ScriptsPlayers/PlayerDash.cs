@@ -13,6 +13,7 @@ public class PlayerDash : MonoBehaviour
         {
             if (player.buttons[0].click && time >= targetTime && player.plState != playerStates.Stunned)
             {
+                player.playAudio(1);
                 time = 0;
                 StartCoroutine(Dash());
                 player.pv.RPC("canNotFight",RpcTarget.All);

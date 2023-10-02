@@ -20,6 +20,8 @@ public enum playerStates
 }
 public class PlayerSettings : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip[] audios;
     public Rigidbody rg;
     public GameObject playerBody;
     public float speed;
@@ -58,6 +60,7 @@ public class PlayerSettings : MonoBehaviour
     private void Awake()
     {
         plState = playerStates.Stand;
+        audioSource = GetComponent<AudioSource>();
         rg = GetComponent<Rigidbody>();
         tag = GameSettings.tags[tagIndex];
         playerBody.tag = tag;
@@ -354,5 +357,10 @@ public class PlayerSettings : MonoBehaviour
             }
 
         }
+	}
+    public void playAudio(int value)
+	{
+        audioSource.clip = audios[value];
+        audioSource.Play();
 	}
 }   

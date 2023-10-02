@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
                     if (joystick.lastId != -1)
                     {
                         player.plState = playerStates.Stand;
+                        player.audioSource.loop = false;
                     }
                 }
                 else
@@ -53,6 +54,12 @@ public class PlayerMovement : MonoBehaviour
 
                     target = Quaternion.Euler(0, Mathf.Atan2(x, z) * Mathf.Rad2Deg, 0);
                     //player.plState = playerStates.Walk;
+                    player.audioSource.clip = player.audios[0];
+                    player.audioSource.loop = true;
+					if (!player.audioSource.isPlaying) 
+                    {
+                        player.audioSource.Play();
+                    }
                 }
             }
             player.anima.SetFloat("x", Mathf.Abs(x) + Mathf.Abs(z));

@@ -51,6 +51,7 @@ public class PlayerHide : MonoBehaviour
 			if (!cl.isUsing) 
             {
                 player.transform.position = new Vector3(local.position.x, transform.position.y, local.position.z);
+                player.playAudio(2);
                 player.pv.RPC("hidePhoton", RpcTarget.All);
                 foreach (Light l in player.lights)
                 {
